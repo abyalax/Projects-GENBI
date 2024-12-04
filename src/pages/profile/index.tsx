@@ -1,5 +1,11 @@
 import Navbar from "@/component/navbar";
 
+export async function getServerSideProps() {
+    return {
+        props: {},
+    };
+}
+
 const ProfilePage = () => {
     return (
         <main className="w-full bg-[#edf0f7] min-h-screen">

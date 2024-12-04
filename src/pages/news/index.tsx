@@ -1,4 +1,11 @@
+ 
 import Navbar from "@/component/navbar";
+
+export async function getServerSideProps() {
+  return {
+      props: {},
+  };
+}
 
 const NewsPage = () => {
   return (
@@ -11,4 +18,4 @@ const NewsPage = () => {
   )
 };
 
-export default NewsPage;
+export default NewsPage

@@ -1,4 +1,11 @@
+ 
 import Navbar from "@/component/navbar";
+
+export async function getServerSideProps() {
+  return {
+      props: {},
+  };
+}
 
 const GalleryPage = () => {
   return (
