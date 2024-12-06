@@ -1,4 +1,19 @@
+import plugin from "tailwindcss/plugin";
 import type { Config } from "tailwindcss";
+import { PluginAPI } from "tailwindcss/types/config";
+
+const pluginRounded = plugin(function ({ addUtilities }: PluginAPI) {
+  const newUtilities = {
+    '.rounded-custom': {
+      'border-top-left-radius': '90rem',
+      'border-top-right-radius': '60rem',
+      'border-bottom-right-radius': '20rem',
+      'border-bottom-left-radius': '28rem',
+    },
+  };
+  addUtilities(newUtilities);
+});
+
 
 const config: Config = {
   content: [
@@ -15,6 +30,8 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    pluginRounded
+  ],
 };
 export default config;

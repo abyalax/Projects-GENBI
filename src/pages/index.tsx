@@ -1,14 +1,13 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import { genBI, homepage, random, rapat } from "@/utils/getter-image";
-import Navbar from "@/component/navbar";
+import { genBI, homepage, random, rapat, uniska } from "@/utils/getter-image";
 import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export async function getServerSideProps() {
   return {
-      props: {},
+    props: {},
   };
 }
 
@@ -16,47 +15,48 @@ export default function Home() {
   return (
     <main className={`bg-[#edf0f7] text-gray-700 min-h-screen ${inter.className}`}>
 
-      <Navbar />
-      {/* <header className="fixed z-20 top-0 bg-[#1C8383] text-white w-full py-2 px-12">
-        <nav className="flex justify-around items-center">
+      <header>
+        <nav className="fixed z-20 top-0 bg-[#1C8383] text-white w-full py-2 px-12">
+          <div className="flex justify-around items-center">
 
-          <div className="w-16 flex gap-4">
-            <Image src={genBI} alt="GenBI" width={100} height={100} />
-            <h2 className="text-nowrap text-lg font-semibold my-auto">GENBI UNISKA</h2>
+            <div className="w-16 flex gap-4">
+              <Image src={genBI} alt="GenBI" width={100} height={100} />
+              <h2 className="text-nowrap text-lg font-semibold my-auto">GENBI UNISKA</h2>
+            </div>
+
+            <div className="text-center">
+              <ul className="flex space-x-4">
+                <li className="cursor-pointer hover:font-bold">
+                  <Link href={"/"}>Beranda</Link>
+                </li>
+                <li className="cursor-pointer hover:font-bold">
+                  <Link href={"/profile"}>Profile</Link>
+                </li>
+                <li className="cursor-pointer hover:font-bold">
+                  <Link href={"/gallery"}>Gallery</Link>
+                </li>
+                <li className="cursor-pointer hover:font-bold">
+                  <Link href={"/news"}>News</Link>
+                </li>
+                <li className="cursor-pointer hover:font-bold">
+                  <Link href={"/blog"}>Blog</Link>
+                </li>
+                <li className="cursor-pointer hover:font-bold">
+                  <Link href={"/agenda"}>Agenda</Link>
+                </li>
+                <li className="cursor-pointer hover:font-bold">Lainnya</li>
+              </ul>
+            </div>
+
+            <div className="">
+              <button className="text-[#1C8383] bg-white px-4 py-2 rounded-md font-semibold hover:font-bold">
+                Hubungi Kami
+              </button>
+            </div>
+
           </div>
-
-          <div className="text-center">
-            <ul className="flex space-x-4">
-              <li className="cursor-pointer hover:font-bold">
-                <Link href={"/"}>Beranda</Link>
-              </li>
-              <li className="cursor-pointer hover:font-bold">
-                <Link href={"/profile"}>Profile</Link>
-              </li>
-              <li className="cursor-pointer hover:font-bold">
-                <Link href={"/gallery"}>Gallery</Link>
-              </li>
-              <li className="cursor-pointer hover:font-bold">
-                <Link href={"/news"}>News</Link>
-              </li>
-              <li className="cursor-pointer hover:font-bold">
-                <Link href={"/blog"}>Blog</Link>
-              </li>
-              <li className="cursor-pointer hover:font-bold">
-                <Link href={"/agenda"}>Agenda</Link>
-              </li>
-              <li className="cursor-pointer hover:font-bold">Lainnya</li>
-            </ul>
-          </div>
-
-          <div className="">
-            <button className="text-[#1C8383] bg-white px-4 py-2 rounded-md font-semibold hover:font-bold">
-              Hubungi Kami
-            </button>
-          </div>
-
         </nav>
-      </header> */}
+      </header>
 
       <section className="text-gray-700 my-12 text-center pt-20">
         <h2 className=" text-2xl font-semibold w-1/2 mx-auto mb-1">
@@ -139,6 +139,104 @@ export default function Home() {
             <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
           </svg>
           <p className="font-semibold">Kemasyarakatan</p>
+        </div>
+      </section>
+
+      <h2 className="text-3xl font-semibold text-[#1C8383] text-center my-12">Tentang GenBI UNISKA</h2>
+
+      <section className="mb-16">
+        <div className="flex justify-center items-center gap-10 px-28">
+
+          <div className="w-1/2">
+            <div className="relative h-[500px] bg-gradient-to-r from-[#1C8383] to-green-50 rounded-custom pl-12 pr-2 pt-10">
+
+              <div className="absolute min-h-44 min-w-44 top-12 left-24 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full shadow-2xl flex flex-col justify-center items-center">
+                <h2 className="text-5xl font-semibold font-mono">2024</h2>
+                <p>GENBI UNISKA</p>
+              </div>
+
+              <div className="relative bg-[#1C8383] w-full ">
+                <Image alt="Uniska" src={uniska.fotbar} width={800} height={500} className="absolute w-full rounded-custom" />
+              </div>
+
+            </div>
+          </div>
+
+          <div className="w-1/2 flex flex-col gap-5 ">
+            <h2 className="text-2xl font-bold text-[#1C8383]">Who We Are</h2>
+            <h2 className="text-5xl font-bold font-serif">Our Vision</h2>
+            <p>
+              Terwujudnya geneari baru Indonesia yang aktif, responsif, dan
+              konstruktif dalam gerakan, pengabdian, pelayanan serta
+              pengembangan minat dan bakat mahasiswa untuk GENBI UNISKA dan Indonesia.
+            </p>
+            <h2 className="text-5xl font-bold font-serif">Our Mission</h2>
+            <ul>
+              <li className="flex gap-2 justify-center items-start  ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" strokeWidth={2} stroke="2" height="28" fill="#1C8383" className="bi bi-check-lg" viewBox="0 0 14 14">
+                  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                </svg>
+                Memberikan pelayanan terbaik dan manfaat berkelanjutan dalam rangka pemenuhan kebutuhan dan hajat hidup mahasiswa FEB UI.
+              </li>
+              <li className="flex gap-2 justify-center items-start  ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" strokeWidth={2} stroke="2" height="28" fill="#1C8383" className="bi bi-check-lg" viewBox="0 0 14 14">
+                  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                </svg>
+                Mewadahi dan memfasilitasi pengembangan minat-bakat serta meningkatkan prestasi mahasiswa FEB UI.
+              </li>
+              <li className="flex gap-2 justify-center items-start  ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" strokeWidth={2} stroke="2" height="28" fill="#1C8383" className="bi bi-check-lg" viewBox="0 0 14 14">
+                  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                </svg>
+                Menciptakan, mengembangkan, dan menyebarkan nilai-nilai inklusivitas gerakan pengabdian mahasiswa FEB UI untuk Indonesia.
+              </li>
+              <li className="flex gap-2 justify-center items-start  ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" strokeWidth={2} stroke="2" height="28" fill="#1C8383" className="bi bi-check-lg" viewBox="0 0 14 14">
+                  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                </svg>
+                Menanamkan akar nilai dan budaya BEM FEB UI serta memberikan nilai tambah yang optimal kepada seluruh fungsionaris.
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </section>
+
+      <h2 className="text-3xl font-semibold text-[#1C8383] text-center my-12">Hubungi Kami</h2>
+
+
+      <section>
+        <div className="flex justify-center items-start gap-10 px-28">
+
+          <div className="w-1/2 flex flex-col">
+            <h2 className="font-bold text-3xl text-[#1C8383] mb-4">Reach Us</h2>
+            <p className="text-lg font-semibold">GENBI</p>
+            <p className="text-lg font-semibold mb-4">Universitas Islam Kadiri-Kediri</p>
+            <p>
+              Jl. Sersan Suharmaji No.38, Manisrenggo, Kec. Kota, Kota Kediri, Jawa Timur 64128
+            </p>
+          </div>
+
+          <form className="w-1/2">
+            <h2 className="text-xl font-semibold mb-4">Send Message</h2>
+
+            <label htmlFor="name">Nama</label>
+            <input type="text" name="name" placeholder="Masukkan Nama" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-blue-500 rounded-lg" />
+
+            <label htmlFor="email">Email</label>
+            <input type="email" name="email" placeholder="Masukkan Email" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-blue-500 rounded-lg" />
+
+            <label htmlFor="pesan">Pesan</label>
+            <textarea name="pesan" placeholder="Ask anything about GENBI UNISKA" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-blue-500 rounded-lg" />
+
+            <div className="w-full flex justify-end items-end">
+              <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white w-fit py-2 px-6 rounded-xl my-3 font-semibold text-lg disabled:cursor-not-allowed disabled:bg-gray-500">
+                Kirim
+              </button>
+            </div>
+
+          </form>
+
         </div>
       </section>
 
