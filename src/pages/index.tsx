@@ -50,7 +50,7 @@ export default function Home() {
 
             <div className="">
               <button className="text-[#1C8383] bg-white px-4 py-2 rounded-md font-semibold hover:font-bold">
-                Hubungi Kami
+                <a href="#kontak">Hubungi Kami</a>
               </button>
             </div>
 
@@ -190,7 +190,7 @@ export default function Home() {
                 </svg>
                 Menciptakan, mengembangkan, dan menyebarkan nilai-nilai inklusivitas gerakan pengabdian mahasiswa FEB UI untuk Indonesia.
               </li>
-              <li className="flex gap-2 justify-center items-start  ">
+              <li id="kontak" className="flex gap-2 justify-center items-start  ">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" strokeWidth={2} stroke="2" height="28" fill="#1C8383" className="bi bi-check-lg" viewBox="0 0 14 14">
                   <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
                 </svg>
@@ -206,31 +206,46 @@ export default function Home() {
 
 
       <section>
-        <div className="flex justify-center items-start gap-10 px-28">
+        <div className="flex justify-center gap-10 px-28 ">
 
-          <div className="w-1/2 flex flex-col">
-            <h2 className="font-bold text-3xl text-[#1C8383] mb-4">Reach Us</h2>
-            <p className="text-lg font-semibold">GENBI</p>
-            <p className="text-lg font-semibold mb-4">Universitas Islam Kadiri-Kediri</p>
-            <p>
-              Jl. Sersan Suharmaji No.38, Manisrenggo, Kec. Kota, Kota Kediri, Jawa Timur 64128
-            </p>
+          <div className="w-1/2 flex flex-col justify-around">
+
+            <div className="h-1/2 ">
+              <h2 className="font-bold text-3xl text-[#1C8383] mb-2">Reach Us !</h2>
+
+              <h2 className="font-bold text-3xl ">
+                Don{"'"}t hesitate to contact us for more information.
+              </h2>
+              <p className="text-slate-500">
+                If you have questions, please contact us via the contact
+                form on this page.
+              </p>
+            </div>
+            <div className="h-max ">
+              <p className="text-lg font-semibold">GENBI</p>
+              <p className="text-lg font-semibold">Universitas Islam Kadiri-Kediri</p>
+              <p>
+                Jl. Sersan Suharmaji No.38, Manisrenggo, Kec. Kota, Kota Kediri, Jawa Timur 64128
+              </p>
+            </div>
+
+
           </div>
 
           <form className="w-1/2">
             <h2 className="text-xl font-semibold mb-4">Send Message</h2>
 
-            <label htmlFor="name">Nama</label>
-            <input type="text" name="name" placeholder="Masukkan Nama" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-blue-500 rounded-lg" />
+            <p className="mb-2 text-slate-600">Nama</p>
+            <input type="text" name="name" placeholder="Masukkan Nama" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-[#1C8383] rounded-lg" />
 
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" placeholder="Masukkan Email" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-blue-500 rounded-lg" />
+            <p className="mb-2 text-slate-600">Email</p>
+            <input type="email" name="email" placeholder="Masukkan Email" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-[#1C8383] rounded-lg" />
 
-            <label htmlFor="pesan">Pesan</label>
-            <textarea name="pesan" placeholder="Ask anything about GENBI UNISKA" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-blue-500 rounded-lg" />
+            <p className="mb-2 text-slate-600">Pesan</p>
+            <textarea name="pesan" placeholder="Ask anything about GENBI UNISKA" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-[#1C8383] rounded-lg" />
 
             <div className="w-full flex justify-end items-end">
-              <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white w-fit py-2 px-6 rounded-xl my-3 font-semibold text-lg disabled:cursor-not-allowed disabled:bg-gray-500">
+              <button type="submit" className="bg-[#1C8383] hover:bg-[#156767] text-white w-fit py-2 px-6 rounded-xl my-3 font-semibold text-lg disabled:cursor-not-allowed disabled:bg-gray-500">
                 Kirim
               </button>
             </div>
