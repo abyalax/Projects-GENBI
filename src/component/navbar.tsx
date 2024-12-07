@@ -28,9 +28,6 @@ const Navbar = () => {
               <Link href={"/news"}>News</Link>
             </li>
             <li className="cursor-pointer hover:font-bold">
-              <Link href={"/blog"}>Blog</Link>
-            </li>
-            <li className="cursor-pointer hover:font-bold">
               <Link href={"/agenda"}>Agenda</Link>
             </li>
             <li className="cursor-pointer hover:font-bold">Lainnya</li>

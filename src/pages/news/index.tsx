@@ -1,4 +1,5 @@
  
+import Footer from "@/component/footer";
 import Navbar from "@/component/navbar";
 
 export async function getServerSideProps() {
@@ -14,6 +15,7 @@ const NewsPage = () => {
       <div className="flex justify-center items-center w-full h-screen">
         <h2 className="text-3xl text-gray-800 font-semibold">Developed Soon</h2>
       </div>
+      <Footer />
     </main>
   )
 };

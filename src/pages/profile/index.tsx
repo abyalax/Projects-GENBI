@@ -1,5 +1,6 @@
+import Footer from "@/component/footer";
 import Navbar from "@/component/navbar";
-import { dummyProfile } from "@/utils/getter-image";
+import { dummyProfile, random, rapat } from "@/utils/getter-image";
 import Image from "next/image";
 
 export async function getServerSideProps() {
@@ -10,18 +11,38 @@ export async function getServerSideProps() {
 
 const ProfilePage = () => {
     return (
-        <main className="w-full bg-[#edf0f7] min-h-screen pb-96">
+        <main className="w-full bg-[#edf0f7] min-h-screen pt-24">
             <Navbar />
-            {/* <div className="flex justify-center items-center w-full h-screen">
-                <h2 className="text-3xl text-gray-800 font-semibold">Developed Soon</h2>
-            </div> */}
-            <h2>
-                Struktur Organisasi
-            </h2>
-            <main className="pt-24">
+
+            <h2 className="text-3xl font-semibold text-[#1C8383] text-center mb-12">Get To Know About Us</h2>
+
+            <section className="grid grid-cols-2 gap-6 text-gray-800 px-32">
+                <div className="col-span-1 flex gap-1">
+                    <Image src={rapat} alt="Rapat" width={600} className="w-2/3 rounded object-cover object-center" />
+                    <Image src={random.a} alt="Rapat" width={800} className="w-1/3 rounded object-cover object-center" />
+                </div>
+                <div className="col-span-1">
+                    <h2 className="text-2xl font-semibold mb-4">Kami adalah Generasi Baru Indonesia Universitas Islam Kadiri-Kediri</h2>
+                    <p className="text-justify">
+                        Generasi Baru Indonesia (GenBi) adalah komunitas mahasiswa penerima
+                        beasiswa Bank Indonesia yang didirikan pada 11 November 2011.
+                        GenBi berperan sebagai Frontliners Bank Indonesia, berfokus pada
+                        pemberdayaan masyarakat untuk pembangunan berkelanjutan.
+                        GenBi aktif di tingkat kampus, regional, dan nasional.
+                        Universitas Islam Kadiri-Kediri (UNISKA) menjadi mitra dalam program ini mulai tahun 2024.
+                        GenBi UNISKA telah merencanakan berbagai program yang bermanfaat bagi masyarakat,
+                        mengembangkan kepekaan sosial, softskill, hardskill, dan jiwa kepemimpinan
+                        anggotanya untuk menciptakan pemimpin masa depan.
+                    </p>
+                </div>
+            </section>
+
+            <h2 className="text-3xl font-semibold text-[#1C8383] text-center my-12">Struktur Organisasi</h2>
+
+            <main className="">
                 <div className="flex justify-center">
                     <div className="rounded relative">
-                        <Image src={dummyProfile.p1} alt="Profile 1" width={500} height={500} className="w-60 h-60 rounded-xl object-center object-cover" />
+                        <Image src={dummyProfile.p5} alt="Profile 1" width={500} height={500} className="w-60 h-60 rounded-xl object-center object-cover" />
                         <div className="absolute -top-4 -right-48 w-64 bg-[#1C8383] text-white px-4 py-2 rounded-lg">
                             <h2 className="text-lg font-semibold">Abie Nur Budi Pangestiko</h2>
                             <p>Ketua Organisasi</p>
@@ -30,12 +51,12 @@ const ProfilePage = () => {
                 </div>
 
                 <div className="flex justify-center">
-                    <span className="h-16 w-0 border border-gray-500 mx-auto" />
+                    <span className="h-10 w-0 border border-gray-500 mx-auto" />
                 </div>
 
                 <div className="flex justify-center">
                     <div className="rounded relative">
-                        <Image src={dummyProfile.p1} alt="Profile 1" width={500} height={500} className="w-60 h-60 rounded-xl object-center object-cover" />
+                        <Image src={dummyProfile.p7} alt="Profile 1" width={500} height={500} className="w-60 h-60 rounded-xl object-center object-cover" />
                         <div className="absolute -top-4 -right-48 bg-[#1C8383] text-white px-4 py-2 rounded-lg">
                             <h2 className="text-lg font-semibold">Reynaldi Surya Satria</h2>
                             <p>Wakil Ketua Organisasi</p>
@@ -44,7 +65,7 @@ const ProfilePage = () => {
                 </div>
 
                 <div className="flex justify-center">
-                    <span className="h-16 w-0 border border-gray-500 mx-auto" />
+                    <span className="h-10 w-0 border border-gray-500 mx-auto" />
                 </div>
 
                 <div className="flex justify-center">
@@ -55,7 +76,7 @@ const ProfilePage = () => {
                 </div>
 
                 <div className="flex justify-center">
-                    <span className="h-16 w-0 border border-gray-500 mx-auto" />
+                    <span className="h-10 w-0 border border-gray-500 mx-auto" />
                 </div>
 
                 <div className="flex justify-center w-full px-36">
@@ -63,11 +84,11 @@ const ProfilePage = () => {
                 </div>
 
                 <div className="flex justify-around">
-                    <span className="h-16 w-0 border border-gray-500 mx-auto" />
-                    <span className="h-16 w-0 border border-gray-500 mx-auto" />
-                    <span className="h-16 w-0 border border-gray-500 mx-auto" />
-                    <span className="h-16 w-0 border border-gray-500 mx-auto" />
-                    <span className="h-16 w-0 border border-gray-500 mx-auto" />
+                    <span className="h-10 w-0 border border-gray-500 mx-auto" />
+                    <span className="h-10 w-0 border border-gray-500 mx-auto" />
+                    <span className="h-10 w-0 border border-gray-500 mx-auto" />
+                    <span className="h-10 w-0 border border-gray-500 mx-auto" />
+                    <span className="h-10 w-0 border border-gray-500 mx-auto" />
                 </div>
 
                 <div className="flex justify-around items-start">
@@ -145,7 +166,7 @@ const ProfilePage = () => {
 
 
             </main>
-
+            <Footer />
         </main>
     )
 };
