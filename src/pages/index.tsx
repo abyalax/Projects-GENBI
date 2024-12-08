@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { genBI, homepage, random, rapat, uniska } from "@/utils/getter-image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import AOS from "aos"
 import "aos/dist/aos.css";
 
@@ -22,6 +22,49 @@ export default function Home() {
       once: false,
     });
   }, []);
+
+  const [formState, setForm] = useState({
+    to_name: "GENBI KOMINFO UNISKA",
+    from_name: "",
+    from_email: "",
+    from_phone: "",
+    message: "",
+  });
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formElement = e.target as HTMLFormElement;
+    try {
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+
+        body: JSON.stringify({
+          service_id: process.env.NEXT_PUBLIC_SERVICE_ID,
+          template_id: process.env.NEXT_PUBLIC_TEMPLATE_ID,
+          user_id: process.env.NEXT_PUBLIC_USER_ID,
+          template_params: formState
+        })
+      }).then((result) => {
+        if (result.ok) {
+          alert("Success Send Message");
+        } else {
+          alert("Failed Send Message");
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    } finally {
+      formElement.reset();
+      formState.from_name = "";
+      formState.from_email = "";
+      formState.from_phone = "";
+      formState.message = "";
+    }
+  }
+
   return (
     <main className={`bg-[#edf0f7] text-gray-700 min-h-screen ${inter.className}`}>
 
@@ -217,8 +260,9 @@ export default function Home() {
         </div>
       </section>
 
-      <h2 className="text-3xl font-semibold text-[#1C8383] text-center my-12">Hubungi Kami</h2>
+      {/* HUBUNGI KAMI */}
 
+      <h2 className="text-3xl font-semibold text-[#1C8383] text-center my-12">Hubungi Kami</h2>
 
       <section>
         <div className="flex justify-center gap-10 px-28 ">
@@ -237,7 +281,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="h-max " data-aos="fade-right">
+            <div className="h-max pb-12" data-aos="fade-right">
               <p className="text-lg font-semibold">GENBI</p>
               <p className="text-lg font-semibold">Universitas Islam Kadiri-Kediri</p>
               <p>
@@ -248,17 +292,27 @@ export default function Home() {
 
           </div>
 
-          <form className="w-1/2">
+          <form className="w-1/2" onSubmit={handleSubmit}>
             <h2 className="text-xl font-semibold mb-4">Send Message</h2>
 
-            <p className="mb-2 text-slate-600">Nama</p>
-            <input type="text" name="name" placeholder="Masukkan Nama" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-[#1C8383] rounded-lg" />
+
+            <div className="mb-2 flex justify-between gap-4">
+              <div className="w-full">
+                <p className=" text-slate-600">Nama</p>
+                <input type="text" name="name" placeholder="Masukkan Nama" onChange={(e) => setForm({ ...formState, from_name: e.target.value })} className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-[#1C8383] rounded-lg" />
+              </div>
+
+              <div className="w-full">
+                <p className=" text-slate-600">Phone</p>
+                <input type="number" maxLength={15} name="phone" onChange={(e) => setForm({ ...formState, from_phone: e.target.value })} placeholder="Masukkan No Telepon" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-[#1C8383] rounded-lg" />
+              </div>
+            </div>
 
             <p className="mb-2 text-slate-600">Email</p>
-            <input type="email" name="email" placeholder="Masukkan Email" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-[#1C8383] rounded-lg" />
+            <input type="email" name="email" placeholder="Masukkan Email" onChange={(e) => setForm({ ...formState, from_email: e.target.value })} className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-[#1C8383] rounded-lg" />
 
             <p className="mb-2 text-slate-600">Pesan</p>
-            <textarea name="pesan" placeholder="Ask anything about GENBI UNISKA" className="border border-gray-400 mb-4 w-full p-3 focus:outline-none focus:ring-1 focus:ring-[#1C8383] rounded-lg" />
+            <textarea name="pesan" placeholder="Ask anything about GENBI UNISKA" onChange={(e) => setForm({ ...formState, message: e.target.value })} className="border border-gray-400 mb-4 w-full p-3 h-32 focus:outline-none focus:ring-1 focus:ring-[#1C8383] rounded-lg" />
 
             <div className="w-full flex justify-end items-end">
               <button type="submit" className="bg-[#1C8383] hover:bg-[#156767] text-white w-fit py-2 px-6 rounded-xl my-3 font-semibold text-lg disabled:cursor-not-allowed disabled:bg-gray-500">

@@ -36,7 +36,7 @@ const Navbar = () => {
 
         <div className="">
           <button className="text-[#1C8383] bg-white px-4 py-2 rounded-md font-semibold hover:font-bold">
-            Hubungi Kami
+            <Link href={"/#kontak"}>Hubungi Kami</Link>
           </button>
         </div>
 

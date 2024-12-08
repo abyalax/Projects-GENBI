@@ -2,6 +2,8 @@ import Footer from "@/component/footer";
 import Navbar from "@/component/navbar";
 import { dummyProfile, random, rapat } from "@/utils/getter-image";
 import Image from "next/image";
+import { useEffect } from "react";
+import AOS from "aos";
 
 export async function getServerSideProps() {
     return {
@@ -10,6 +12,13 @@ export async function getServerSideProps() {
 }
 
 const ProfilePage = () => {
+    useEffect(() => {
+        AOS.init({
+          duration: 800,
+          offset: 230,
+          once: false,
+        });
+      }, []);
     return (
         <main className="w-full bg-[#edf0f7] min-h-screen pt-24">
             <Navbar />
@@ -17,11 +26,11 @@ const ProfilePage = () => {
             <h2 className="text-3xl font-semibold text-[#1C8383] text-center mb-12">Get To Know About Us</h2>
 
             <section className="grid grid-cols-2 gap-6 text-gray-800 px-32">
-                <div className="col-span-1 flex gap-1">
+                <div className="col-span-1 flex gap-1" data-aos="fade-right">
                     <Image src={rapat} alt="Rapat" width={600} className="w-2/3 rounded object-cover object-center" />
                     <Image src={random.a} alt="Rapat" width={800} className="w-1/3 rounded object-cover object-center" />
                 </div>
-                <div className="col-span-1">
+                <div className="col-span-1" data-aos="fade-left">
                     <h2 className="text-2xl font-semibold mb-4">Kami adalah Generasi Baru Indonesia Universitas Islam Kadiri-Kediri</h2>
                     <p className="text-justify">
                         Generasi Baru Indonesia (GenBi) adalah komunitas mahasiswa penerima
