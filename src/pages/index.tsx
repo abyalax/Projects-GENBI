@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import AOS from "aos"
 import "aos/dist/aos.css";
+import TypingAnimation from "@/utils/typing";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -114,7 +115,10 @@ export default function Home() {
             Selamat datang di website GENBI UNISKA Kediri
           </h2>
           <h2 className=" text-xl font-semibold w-1/2 mx-auto mb-4">
-            Shalom, Om Swastiastu, Namo Buddhaya
+            <TypingAnimation text={
+              ["Shalom, Om Swastiastu, Namo Buddhaya, Salam Kebajikan, Selamat Sejahtera bagi kita semua"]
+            } speed={80} delay={2000}
+            />
           </h2>
           <p className="text-slate-600 w-1/3 mx-auto">
             Generasi Baru Indonesia (GenBI) adalah komunitas mahasiswa penerima
