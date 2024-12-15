@@ -16,6 +16,15 @@ import p8 from "/public/assets/dummy/8.jpg"
 import p9 from "/public/assets/dummy/9.jpg"
 import p10 from "/public/assets/dummy/10.jpg"
 
+import ba from "/public/assets/kegiatan/temuResponden/a.jpeg";
+import bb from "/public/assets/kegiatan/temuResponden/b.jpeg";
+import bc from "/public/assets/kegiatan/temuResponden/c.jpeg";
+import bd from "/public/assets/kegiatan/temuResponden/d.jpeg";
+import be from "/public/assets/kegiatan/temuResponden/e.jpeg";
+import bf from "/public/assets/kegiatan/temuResponden/f.jpeg";
+
+const temuResponden = [ba, bb, bc, bd, be, bf]
+
 const uniska = {
     fotbar
 }
@@ -24,9 +33,14 @@ const random = {
     a
 }
 
+
+const kegiatan = {
+    temuResponden
+}
+
 const dummyProfile = {
     p1, p2, p3, p4, p5, p6, p7, p8, p9, p10
 }
 
-export { genBI, homepage, rapat, random, uniska, dummyProfile }
+export { genBI, homepage, rapat, random, uniska, dummyProfile, kegiatan }
 

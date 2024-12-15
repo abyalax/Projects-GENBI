@@ -4,9 +4,10 @@ interface TypingProps {
   text: string[];
   speed?: number;
   delay?: number;
+  className?: string;
 }
 
-const TypingAnimation = ({ text, speed = 100, delay = 2000 }: TypingProps) => {
+const TypingAnimation = ({ text, speed = 100, delay = 2000, className }: TypingProps) => {
   const [displayedText, setDisplayedText] = useState("");
   const [charIndex, setCharIndex] = useState(0);
   const [textIndex, setTextIndex] = useState(0);
@@ -41,7 +42,7 @@ const TypingAnimation = ({ text, speed = 100, delay = 2000 }: TypingProps) => {
     }
   }, [charIndex, textIndex, isDeleting, text, speed, delay]);
 
-  return <span>{displayedText}</span>;
+  return <span className={className}>{displayedText}</span>;
 };
 
 export default TypingAnimation;
