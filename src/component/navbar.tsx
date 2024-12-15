@@ -8,14 +8,14 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   return (
     <nav className="fixed z-20 top-0 bg-[#1C8383] text-white w-full py-2 px-12">
-    <div className="flex ml:justify-around justify-between items-center">
+    <div className="flex mml:justify-around justify-between items-center">
 
       <div className="flex gap-4">
         <Image src={genBI} alt="GenBI" width={100} height={100} className="w-16" />
         <h2 className="text-nowrap text-lg font-semibold my-auto">GENBI UNISKA</h2>
       </div>
 
-      <ul className="ml:flex gap-4 hidden text-center">
+      <ul className="mml:flex gap-4 hidden text-center">
         <li className="cursor-pointer hover:font-bold">
           <Link href={"/"}>Beranda</Link>
         </li>
@@ -33,13 +33,13 @@ const Navbar = () => {
         </li>
       </ul>
 
-      <div className="ml:block hidden">
+      <div className="mml:block hidden">
         <button className="text-[#1C8383] bg-white px-4 py-2 rounded-md font-semibold hover:font-bold">
           <a href="#kontak">Hubungi Kami</a>
         </button>
       </div>
 
-      <svg onClick={() => setOpen(!open)} xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" className={`bi bi-list ${open ? "hidden" : ""} ml:hidden cursor-pointer`} viewBox="0 0 16 16">
+      <svg onClick={() => setOpen(!open)} xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" className={`bi bi-list ${open ? "hidden" : ""} mml:hidden cursor-pointer`} viewBox="0 0 16 16">
         <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
       </svg>
 

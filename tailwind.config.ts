@@ -24,7 +24,8 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        ml: "850px", // Custom breakpoint dengan min-width
+        ml:"950px",
+        mml: "850px", // Custom breakpoint dengan min-width
         xs: "500px",
         xxs: "300px",
       },
