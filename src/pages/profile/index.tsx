@@ -11,6 +11,18 @@ export async function getServerSideProps() {
     };
 }
 
+const deskripsi = `
+Generasi Baru Indonesia (GenBi) adalah komunitas mahasiswa penerima
+beasiswa Bank Indonesia yang didirikan pada 11 November 2011.
+GenBi berperan sebagai Frontliners Bank Indonesia, berfokus pada
+pemberdayaan masyarakat untuk pembangunan berkelanjutan.
+GenBi aktif di tingkat kampus, regional, dan nasional.
+Universitas Islam Kadiri-Kediri (UNISKA) menjadi mitra dalam program ini mulai tahun 2024.
+GenBi UNISKA telah merencanakan berbagai program yang bermanfaat bagi masyarakat,
+mengembangkan kepekaan sosial, softskill, hardskill, dan jiwa kepemimpinan
+anggotanya untuk menciptakan pemimpin masa depan.
+`
+
 const ProfilePage = () => {
     useEffect(() => {
         AOS.init({
@@ -23,9 +35,9 @@ const ProfilePage = () => {
         <main className="w-full bg-[#edf0f7] min-h-screen pt-24">
             <Navbar />
 
-            <h2 className="text-3xl font-semibold text-[#1C8383] text-center mb-12">Get To Know About Us</h2>
+            <h2 className="ml:text-3xl sm:text-2xl text-xl font-semibold text-[#1C8383] text-center mb-12">Get To Know About Us</h2>
 
-            <section className="lg:grid lg:grid-cols-2 mml:flex mml:flex-col gap-6 text-gray-800 px-6 sm:px-14 lg:px-32 ">
+            <section className="lg:grid lg:grid-cols-2 mml:flex mml:flex-col gap-6 text-gray-800 px-6 sm:px-10 lg:px-32">
                 <div className="mml:col-span-1 sm:w-full flex gap-1" data-aos="fade-right">
                     <Image src={rapat} alt="Rapat" width={600} className=" w-2/3 rounded object-cover object-center" />
                     <Image src={random.a} alt="Rapat" width={800} className="w-1/3 rounded object-cover object-center" />
@@ -38,6 +50,7 @@ const ProfilePage = () => {
                         GenBi berperan sebagai Frontliners Bank Indonesia, berfokus pada
                         pemberdayaan masyarakat untuk pembangunan berkelanjutan.
                         GenBi aktif di tingkat kampus, regional, dan nasional.
+                        <br/>
                         Universitas Islam Kadiri-Kediri (UNISKA) menjadi mitra dalam program ini mulai tahun 2024.
                         GenBi UNISKA telah merencanakan berbagai program yang bermanfaat bagi masyarakat,
                         mengembangkan kepekaan sosial, softskill, hardskill, dan jiwa kepemimpinan
@@ -46,13 +59,13 @@ const ProfilePage = () => {
                 </div>
             </section>
 
-            <h2 className="text-3xl font-semibold text-[#1C8383] text-center my-12">Struktur Organisasi</h2>
+            <h2 className="ml:text-3xl sm:text-2xl text-xl font-semibold text-[#1C8383] text-center my-12">Struktur Organisasi</h2>
 
             <main className="flex flex-col justify-start items-center mb-96">
 
                 {/* KEPENGURUSAN */}
 
-                <div className="flex gap-1 bg-[#1C8383] text-white p-2 rounded-full">
+                <div className="flex gap-1 bg-[#1C8383] text-white sm:p-2 p-1.5 sm:rounded-full rounded-xl">
                     <Image src={dummyProfile.p5} alt="dummyProfile.p5" className="rounded-full w-14 h-14 object-cover object-center" />
                     <div>
                         <h2 className="font-semibold">Abie Nur Budi Pangestiko</h2>
@@ -64,7 +77,7 @@ const ProfilePage = () => {
                     <span className="h-10 w-0 border border-gray-500 mx-auto" />
                 </div>
 
-                <div className="flex gap-1 bg-[#1C8383] text-white p-2 rounded-full">
+                <div className="flex gap-1 bg-[#1C8383] text-white sm:p-2 p-1.5 sm:rounded-full rounded-xl">
                     <Image src={dummyProfile.p7} alt="dummyProfile.p7" className="rounded-full w-14 h-14 object-cover object-center" />
                     <div>
                         <h2 className="font-semibold">Reynaldi Surya Satria</h2>
@@ -87,17 +100,17 @@ const ProfilePage = () => {
                 <div className="flex justify-around w-full">
                     <div className="flex flex-col gap-1">
                         <h2 className="text-center text-lg font-semibold">Sekretaris</h2>
-                        <div className="flex gap-1 bg-[#1C8383] text-white py-2 pl-2 pr-4 rounded-full">
+                        <div className="flex gap-1 bg-[#1C8383] text-white py-2 pl-2 pr-4 sm:rounded-full rounded-xl">
                             <Image src={dummyProfile.p7} alt="dummyProfile.p7" className="rounded-full w-14 h-14 object-cover object-center" />
                             <div>
                                 <h2 className="font-semibold text-nowrap">Rio</h2>
                                 <p className="font-light text-nowrap">Sekretaris 1</p>
                             </div>
                         </div>
-                        <div className="flex gap-1 bg-[#1C8383] text-white py-2 pl-2 pr-4 rounded-full">
+                        <div className="flex gap-1 bg-[#1C8383] text-white py-2 pl-2 pr-4 sm:rounded-full rounded-xl">
                             <Image src={dummyProfile.p7} alt="dummyProfile.p7" className="rounded-full w-14 h-14 object-cover object-center" />
                             <div>
-                                <h2 className="font-semibold text-nowrap">Neza Firsty Ananda</h2>
+                                <h2 className="font-semibold text-nowrap">Neza Firsty</h2>
                                 <p className="font-light text-nowrap">Sekretaris 2</p>
                             </div>
                         </div>
@@ -105,14 +118,14 @@ const ProfilePage = () => {
 
                     <div className="flex flex-col gap-1">
                         <h2 className="text-center text-lg font-semibold">Bendahara</h2>
-                        <div className="flex gap-1 bg-[#1C8383] text-white py-2 pl-2 pr-4 rounded-full">
+                        <div className="flex gap-1 bg-[#1C8383] text-white py-2 pl-2 pr-4 sm:rounded-full rounded-xl">
                             <Image src={dummyProfile.p7} alt="dummyProfile.p7" className="rounded-full w-14 h-14 object-cover object-center" />
                             <div>
                                 <h2 className="font-semibold text-nowrap">Adam</h2>
                                 <p className="font-light text-nowrap">Bendahara 1</p>
                             </div>
                         </div>
-                        <div className="flex gap-1 bg-[#1C8383] text-white py-2 pl-2 pr-4 rounded-full">
+                        <div className="flex gap-1 bg-[#1C8383] text-white py-2 pl-2 pr-4 sm:rounded-full rounded-xl">
                             <Image src={dummyProfile.p7} alt="dummyProfile.p7" className="rounded-full w-14 h-14 object-cover object-center" />
                             <div>
                                 <h2 className="font-semibold text-nowrap">Reynaldi</h2>
@@ -251,11 +264,11 @@ const ProfilePage = () => {
 
                 {/* BADAN PENGURUS HARIAN MOBILE*/}
                 <section className="ml:hidden block">
-                    <h2 className="text-3xl font-semibold text-[#1C8383] text-center mt-6 mb-2">Badan Pengurus Harian</h2>
+                    <h2 className="ml:text-3xl sm:text-2xl text-xl font-semibold text-[#1C8383] text-center mt-6 mb-2">Badan Pengurus Harian</h2>
                     <div className="flex flex-col justify-start items-start w-full sm:px-12 px-6">
                         <div className="flex w-full">
 
-                            <div className="flex flex-col justify-center w-fit">
+                            <div className="flex flex-col justify-center w-full">
                                 <div className=" bg-[#1C8383] text-white px-4 py-2 ml:text-nowrap xxs:text-wrap rounded-full">
                                     <h2 className="text-5xl text-center font-semibold font-mono">B</h2>
                                     <h2 className="text-5xl text-center font-semibold font-mono">P</h2>
@@ -263,7 +276,7 @@ const ProfilePage = () => {
                                 </div>
                             </div>
 
-                            <div className="flex flex-col justify-center w-1/6">
+                            <div className="flex flex-col justify-center w-3/6">
                                 <span className="h-0 w-full border border-gray-500 mx-auto" />
                             </div>
 
