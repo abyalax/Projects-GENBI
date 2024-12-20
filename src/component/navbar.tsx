@@ -1,5 +1,4 @@
 
-import { genBI } from "@/utils/getter-image";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -11,7 +10,7 @@ const Navbar = () => {
     <div className="flex mml:justify-around justify-between items-center">
 
       <div className="flex gap-4">
-        <Image src={genBI} alt="GenBI" width={100} height={100} className="w-16" />
+        <Image src={"/assets/genbi/logo-genbi-polos.png"} alt="GenBI" width={100} height={100} className="w-16" />
         <h2 className="text-nowrap text-lg font-semibold my-auto">GENBI UNISKA</h2>
       </div>
 

@@ -90,5 +90,4 @@ const events = [
     }
 ];
 
-
 export { events }
