@@ -2,19 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
+html, body {
   box-sizing: border-box;
   scroll-behavior: smooth;
   padding: 0;
   margin: 0;
-  width: 100vw;
   overflow-x: hidden;
+  min-height: 100%;
 }
 
-body {
-  padding: 0;
-  margin: 0;
-  width: 100%;
+.red {
+  background-color: red;
 }
 
 @layer utilities {

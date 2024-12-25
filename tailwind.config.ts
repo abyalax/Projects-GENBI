@@ -18,8 +18,10 @@ const pluginRounded = plugin(function ({ addUtilities }: PluginAPI) {
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/component/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/component/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/feature/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -28,6 +30,11 @@ const config: Config = {
         mml: "850px", // Custom breakpoint dengan min-width
         xs: "500px",
         xxs: "300px",
+      },
+      backgroundColor:{
+        "toska-light": "#21A4A4",
+        "toska": "#1C8383",
+        "toska-dark": "#146767",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
