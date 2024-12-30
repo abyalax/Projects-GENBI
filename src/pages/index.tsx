@@ -1,11 +1,13 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import AOS from "aos"
 import "aos/dist/aos.css";
 import TypingAnimation from "@/utils/typing";
 import Head from "next/head";
+import Footer from "@/component/footer";
+import Navbar from "@/component/navbar";
+import { ToasterContext } from "@/context/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,11 +18,11 @@ export async function getServerSideProps() {
 }
 
 export default function Home() {
-  const [open, setOpen] = useState(false);
+  const { setToaster } = useContext(ToasterContext)
   useEffect(() => {
     AOS.init({
       duration: 800,
-      offset: 0,
+      offset: 230,
       once: false,
     });
   }, []);
@@ -67,6 +69,16 @@ export default function Home() {
     }
   }
 
+  useEffect(() => {
+    setToaster({
+      variant: "success",
+      message: "Welcome To GenBI UNISKA"
+    })
+    return () => {
+
+    };
+  }, [setToaster]);
+
   return (
     <>
       <Head>
@@ -82,71 +94,7 @@ export default function Home() {
         <link rel="icon" href="/assets/genbi/logo-genbi.png" type="img/png" />
       </Head>
       <main className={`bg-[#edf0f7] text-gray-700 min-h-screen min-w-screen px-0 ${inter.className}`}>
-
-        <nav className="fixed z-20 top-0 bg-[#1C8383] text-white w-full py-2 px-12">
-          <div className="flex mml:justify-around justify-between items-center">
-
-            <div className="flex gap-4">
-              <Image src={"/assets/genbi/logo-genbi-polos.png"} alt="/assets/genbi/logo-genbi-polos.png" width={100} height={100} className="w-16" />
-              <h2 className="text-nowrap text-lg font-semibold my-auto">GENBI UNISKA</h2>
-            </div>
-
-            <ul className="mml:flex gap-4 hidden text-center">
-              <li className="cursor-pointer hover:font-bold">
-                <Link href={"/"}>Beranda</Link>
-              </li>
-              <li className="cursor-pointer hover:font-bold">
-                <Link href={"/profile"}>Profile</Link>
-              </li>
-              <li className="cursor-pointer hover:font-bold">
-                <Link href={"/gallery"}>Gallery</Link>
-              </li>
-              <li className="cursor-pointer hover:font-bold">
-                <Link href={"/news"}>News</Link>
-              </li>
-              <li className="cursor-pointer hover:font-bold">
-                <Link href={"/agenda"}>Agenda</Link>
-              </li>
-            </ul>
-
-            <div className="mml:block hidden">
-              <button className="text-[#1C8383] bg-white px-4 py-2 rounded-md font-semibold hover:font-bold">
-                <a href="#kontak">Hubungi Kami</a>
-              </button>
-            </div>
-
-            <svg onClick={() => setOpen(!open)} xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" className={`bi bi-list ${open ? "hidden" : ""} mml:hidden cursor-pointer`} viewBox="0 0 16 16">
-              <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-            </svg>
-
-            <div className={`${open ? "" : "hidden"} fixed min-w-full top-0 left-0 right-0 h-fit flex justify-between p-4 bg-[#1C8383] z-10`}>
-
-              <ul className="flex flex-col gap-4">
-                <li className="cursor-pointer hover:font-bold">
-                  <Link href={"/"}>Beranda</Link>
-                </li>
-                <li className="cursor-pointer hover:font-bold">
-                  <Link href={"/profile"}>Profile</Link>
-                </li>
-                <li className="cursor-pointer hover:font-bold">
-                  <Link href={"/gallery"}>Gallery</Link>
-                </li>
-                <li className="cursor-pointer hover:font-bold">
-                  <Link href={"/news"}>News</Link>
-                </li>
-                <li className="cursor-pointer hover:font-bold">
-                  <Link href={"/agenda"}>Agenda</Link>
-                </li>
-              </ul>
-
-              <svg onClick={() => setOpen(!open)} xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" className="cursor-pointer" viewBox="0 0 16 16">
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-              </svg>
-
-            </div>
-
-          </div>
-        </nav>
+        <Navbar />
 
         <section className="text-gray-700 mml:my-12 my-6 text-center pt-20">
           <div data-aos="fade-up" className="w-full sm:px-8 px-4 mml:mx-auto mml:w-3/4 md:px-16">
@@ -283,7 +231,7 @@ export default function Home() {
               </div>
               <div data-aos="fade-up">
                 <h2 className="mml:text-5xl text-3xl font-bold font-serif">Our Mission</h2>
-                <ul className="text-justify ">
+                <ul className="text-justify">
                   <li className="flex gap-2 justify-center items-start ">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" strokeWidth={2} stroke="2" height="28" fill="#1C8383" className="bi bi-check-lg w-[6%] sm:w-[10%] flex-shrink-0" viewBox="0 0 14 14">
                       <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
@@ -375,10 +323,7 @@ export default function Home() {
           </div>
         </section>
 
-        <footer className="py-14 bg-[#1B6060] mt-12 flex flex-col justify-center items-center text-white">
-          <p className="font-light sm:font-normal">Copyright 2024 © Univeritas Islam Kadiri</p>
-          <p className="font-light sm:font-normal">Made by Abya</p>
-        </footer>
+        <Footer />
 
       </main>
     </>

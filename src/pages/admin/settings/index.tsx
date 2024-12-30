@@ -1,9 +1,11 @@
-import AdminSettings from "@/feature/admin/settings"
+import AdminLayout from "../../../component/admin/__layout"
 
-const AdminSettingsPage = () => {
+const AdminSettings = () => {
     return (
-        <AdminSettings />
+        <AdminLayout>
+            <h2 className="w-full mx-auto my-52">Ini Settings Page</h2>
+        </AdminLayout>
     )
 }
 
-export default AdminSettingsPage
+export default AdminSettings

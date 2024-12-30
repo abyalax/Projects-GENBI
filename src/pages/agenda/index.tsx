@@ -8,6 +8,8 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { events } from "@/utils/dummy-data";
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import styles from "./styles.module.css"
+import { EventClickArg } from "@fullcalendar/core";
 
 const FullCalendar = dynamic(() => import('@fullcalendar/react'), { ssr: false });
 
@@ -27,8 +29,8 @@ const AgendaPage = () => {
     };
   }, []);
 
-  const handleEventClick = (info: any) => {
-    const event = info.event;
+  const handleEventClick = (e: EventClickArg) => {
+    const event = e.event;
     let eventDetails = `Event: ${event.title}\n`;
     eventDetails += `Description: ${event.extendedProps.description}\n`;
     eventDetails += `Location: ${event.extendedProps.location}\n`;
@@ -71,7 +73,7 @@ const AgendaPage = () => {
           Get the latest information about upcoming events and important dates!
         </p>
 
-        <div className="ml:px-40 sm:px-24 xs:px-8 xxs:px-4 px-2 pt-8 ml:text-base sm:text-sm text-xs">
+        <div className={`${styles.fullCalendarWrapper} ml:px-40 sm:px-24 xs:px-8 xxs:px-4 px-2 pt-8 ml:text-base sm:text-sm text-xs`}>
           <FullCalendar
             key={windowWidth}
             plugins={[

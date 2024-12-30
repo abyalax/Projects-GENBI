@@ -1,33 +1,28 @@
 import Footer from "@/component/footer"
 import Navbar from "@/component/navbar"
+import QuillContent from "@/component/quill-content"
+import { NamaAnggota } from "@/services/anggota"
+import { getNewsBySlug, NewsDetail } from "@/services/news"
+import { formatDate } from "@/utils/convert-date"
 import Head from "next/head"
 import Image from "next/image"
 
-const news = `
-    KBRN, Kediri: Kantor Perwakilan Bank Indonesia (KPw BI) Kediri menggelar acara temu komunitas dengan tema "Perkuat Sinergi untuk Transformasi dan Ketahanan Ekonomi" di IKCC Kediri, Senin (09/12/2024).
+export async function getServerSideProps({ params }: { params: { slug: string } }) {
+    const news: NewsDetail[] = await getNewsBySlug(params.slug)
+    return {
+        props: { news }
+    };
+}
 
-Acara ini dihadiri oleh GenBI Universitas Islam Kadiri, komunitas baru penerima beasiswa Bank Indonesia, yang hadir atas undangan resmi dari BI.
+const DetailNews = ({ news }: { news: NewsDetail[] }) => {
 
-Kegiatan ini bertujuan untuk mempererat hubungan antara Bank Indonesia dengan komunitas muda penerima beasiswa, sekaligus mengenalkan pentingnya data ekonomi dalam mendukung kebijakan dan pengembangan daerah.
+    console.log({ news });
 
-“Kegiatan seperti ini sangat penting untuk meningkatkan kolaborasi dan keterlibatan aktif generasi muda, terutama dalam memahami peran data dan transformasi ekonomi di era digital,” ujar perwakilan dari BI Kediri.
 
-Dalam era digital, data menjadi salah satu aset berharga yang mampu memberikan dampak signifikan terhadap pertumbuhan ekonomi. BI menekankan bahwa akurasi dan validitas data, seperti yang dikumpulkan melalui survei dan liaison, menjadi fondasi penting untuk mendukung analisis ekonomi yang lebih tepat sasaran.
-
-Survei yang dilakukan Bank Indonesia mencakup berbagai aspek seperti harga pangan strategis, penjualan eceran, kegiatan dunia usaha, dan konsumsi. Informasi ini berperan penting dalam memberikan masukan kepada pemerintah daerah, mendukung pengendalian inflasi, serta memperkuat stabilitas ekonomi regional.
-
-“Dengan data yang valid, kami dapat menyusun kebijakan yang lebih efektif dan memberikan peringatan dini terhadap potensi gangguan ekonomi, baik di tingkat daerah maupun nasional,” lanjutnya.
-
-Selain memberikan paparan terkait pentingnya survei dan pengumpulan data, acara ini juga menjadi ajang diskusi dan edukasi bagi para peserta GenBI untuk lebih memahami peran Bank Indonesia dalam menjaga stabilitas ekonomi, termasuk melalui kebijakan moneter, pengaturan sistem pembayaran, dan stabilitas keuangan.
-
-Acara tersebut ditutup dengan sesi tanya jawab interaktif yang mengupas lebih dalam mengenai pentingnya kolaborasi generasi muda dengan Bank Indonesia untuk mendukung transformasi ekonomi dan inovasi di daerah.
-`
-
-const DetailNews = () => {
     return (
         <>
             <Head>
-                <title>Temu Responden</title>
+                <title>{news[0].title}</title>
                 <meta name="description" content="Pelajari lebih lanjut tentang Temu Responden Bank Indonesia 2024" />
                 <meta name="keywords" content="GENBI UNISKA, Temu Responden Bank Indonesia 2024, Generasi Baru Indonesia, GENBI Universitas Islam Kadiri" />
                 <meta name="author" content="GENBI KOMINFO UNISKA" />
@@ -40,15 +35,16 @@ const DetailNews = () => {
             </Head>
             <main>
                 <Navbar />
-                <section className="w-4/6 mx-auto text-gray-700 pt-28">
-                    <h2 className="text-4xl font-bold">Temu Responden 2024, BI Bersama Generasi Baru Universitas Islam Kadiri</h2>
-                    <div className="flex gap-6 my-4">
-                        <p>Oleh : Abya</p>
-                        <p>Editor : Abya</p>
-                        <p>Senin, 09 Desember 2024</p>
-                        <p>IKCC</p>
+                <section className="w-4/5 mx-auto text-gray-700 pt-28">
+                    <h2 className="text-4xl font-bold mx-20">{news[0].title}</h2>
+                    <div className="flex justify-between gap-10 my-4 px-20">
+                        <p>Oleh : {news[0].author_name}</p>
+                        <div>
+                            <p>{formatDate(news[0].date)}</p>
+                            <p className="text-end">IKCC</p>
+                        </div>
                     </div>
-                    <div className="flex gap-2 my-4">
+                    <div className="flex gap-2 my-4 px-20">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" className="bi bi-whatsapp w-9 h-9 p-2 bg-[#25D366] hover:bg-[#7fffae] rounded-md cursor-pointer hover:-translate-y-3 hover:transform hover:transition duration-300 " viewBox="0 0 16 16">
                             <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232" />
                         </svg>
@@ -66,28 +62,30 @@ const DetailNews = () => {
                             <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5" />
                         </svg>
                     </div>
-                    <div className="w-full">
+                    <div className="w-full px-20">
                         <Image src={"/assets/kegiatan/a.jpeg"} alt="/assets/kegiatan/a.jpeg" width={1000} height={600} className="w-full h-[70vh] mx-auto object-cover object-center rounded-lg" />
-                        <p className="border-l-2 border-red-500 italic pl-2 mt-2">
-                            Penghargaan dari BI kepada Peserta Temu Responden 2024
+                        <p className="border-l-2 border-red-500 italic pl-2 mt-2 mb-10">
+                            {news[0].meta_description}
                         </p>
                     </div>
-                    <main className="grid grid-cols-6">
-                        <article className="col-span-4">
-                            <p className=" whitespace-pre-line text-justify">{news}</p>
+                    <main className="grid grid-cols-8">
+                        <article className="col-span-6">
+                            <div className="whitespace-pre-line text-justify">
+                                <QuillContent content={news[0].content} />
+                            </div>
                         </article>
                         <aside className="col-span-2 bg-slate-400 rounded-lg p-4 m-4">
                             <h2 className="text-lg">Berita terbaru</h2>
 
                         </aside>
                     </main>
-                    <h2 className="flex gap-2 items-center h-fit py-2">
+                    <h2 className="flex gap-2 items-center h-fit pb-2 pt-4 px-20">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="black" className="bi bi-share-fill " strokeWidth={1} stroke="black" viewBox="0 0 16 16">
                             <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5" />
                         </svg>
                         Bagikan :
                     </h2>
-                    <div className="flex gap-2 my-4">
+                    <div className="flex gap-2 my-4 px-20">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" className="bi bi-whatsapp w-9 h-9 p-2 bg-[#25D366] hover:bg-[#7fffae] rounded-md cursor-pointer hover:-translate-y-3 hover:transform hover:transition duration-300 " viewBox="0 0 16 16">
                             <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232" />
                         </svg>

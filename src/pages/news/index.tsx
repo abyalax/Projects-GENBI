@@ -3,30 +3,22 @@ import Footer from "@/component/footer";
 import Navbar from "@/component/navbar";
 import Link from "next/link";
 import Head from "next/head";
+import { getAllNews, News } from "@/services/news";
+import QuillContent from "@/component/quill-content";
+import { formatDate } from "@/utils/convert-date";
 
 export async function getServerSideProps() {
+
+  const news = await getAllNews()
+
   return {
-    props: {},
+    props: { news },
   };
 }
 
-const judul = "Temu Responden dan Seminar 2024"
+const NewsPage = ({ news }: { news: News[] }) => {
+  console.log({ news });
 
-const article = `
-Lorem ipsum dolor sit amet consectetur adipisicing elit.
-At perferendis reprehenderit earum sequi cum placeat tenetur provident, vel,
-tempore quod nulla possimus unde culpa iusto maiores consequatur, quas illo ex.
-Lorem ipsum dolor sit amet consectetur adipisicing elit.
-At perferendis reprehenderit earum sequi cum placeat tenetur provident, vel,
-tempore quod nulla possimus unde culpa iusto maiores consequatur, quas illo ex.
-Lorem ipsum dolor sit amet consectetur adipisicing elit.
-At perferendis reprehenderit earum sequi cum placeat tenetur provident, vel,
-tempore quod nulla possimus unde culpa iusto maiores consequatur, quas illo ex.
-Lorem ipsum dolor sit amet consectetur adipisicing elit.
-At perferendis reprehenderit earum sequi cum placeat tenetur provident, vel,
-tempore quod nulla possimus unde culpa iusto maiores consequatur, quas illo ex.`
-
-const NewsPage = () => {
   return (
     <>
       <Head>
@@ -78,66 +70,30 @@ const NewsPage = () => {
         <section>
           <div className="flex flex-col ml:gap-14 sm:gap-8 xs:gap-6 gap-4 justify-center items-start ml:px-32 sm:px-16 px-8 pt-6">
 
-            <div className="ml:flex ml:flex-row flex flex-col ml:gap-6 gap-4 mx-auto">
-              <Image src={"/assets/kegiatan/a.jpeg"} alt="temu responden" width={1000} height={800} className="ml:h-64 ml:w-64 sm:h-52 w-full h-32 mx-auto object-center object-cover rounded" />
+            {news?.map((e, i) => (
+              <div key={i} className="w-full ml:flex ml:flex-row flex flex-col ml:gap-6 gap-4 mx-auto">
 
-              <div className="flex flex-col">
-                <div className="flex justify-between items-start ml:pr-6">
-                  <h2 className="ml:text-2xl sm:text-lg text-sm font-bold font-serif text-gray-700 mb-4 ml:mt-2">
-                    {judul.length <= 33 ? judul : judul.slice(0, 33) + '...'}
-                    <Link href={"/news/temu-responden-2024"} className="block ml:hidden hover:text-blue-500 text-gray-500 text-xs sm:text-sm font-normal">Baca Selengkapnya...</Link>
-                  </h2>
-                  <p className="sm:text-base sm:block hidden text-xs text-gray-500 text-nowrap">09 Desember 2024</p>
+                <Image src={"/assets/kegiatan/a.jpeg"} alt="temu responden" width={1000} height={800} className="ml:h-64 ml:w-64 sm:h-52 w-full h-32 object-center object-cover rounded" />
+
+                <div className="flex flex-col w-full">
+                  <div className="w-full flex justify-between items-start ml:pr-6">
+                    <h2 className="ml:text-2xl sm:text-lg text-sm font-bold font-serif text-gray-700 mb-4 ml:mt-2">
+                      {e.title.length <= 33 ? e.title : e.title.slice(0, 33) + '...'}
+                      <Link href={`/news/${e.slug}`} className="block ml:hidden hover:text-blue-500 text-gray-500 text-xs sm:text-sm font-normal">Baca Selengkapnya...</Link>
+                    </h2>
+                    <p className="sm:text-base sm:block hidden text-xs text-gray-500 text-nowrap">{formatDate(new Date(e.date))}</p>
+                  </div>
+
+                  <div className="hidden ml:block text-gray-700 mb-4 ml:mt-2 text-justify ml:h-fit ml:overflow-visible h-52 overflow-hidden">
+                    {e.description.slice(0, 400) + '.......'}
+                  </div>
+                  <Link href={`/news/${e.slug}`} className="hidden ml:block sm:text-base text-xs bg-slate-500 hover:bg-slate-600 text-white py-2 px-4 w-fit rounded">
+                    Baca Selengkapnya
+                  </Link>
                 </div>
-
-                <p className="hidden ml:block text-gray-700 mb-4 ml:mt-2 text-justify ml:h-fit ml:overflow-visible h-52 overflow-hidden">
-                  {article.slice(0, 400) + '.......'}
-                </p>
-                <Link href={"/news/temu-responden-2024"} className="hidden ml:block sm:text-base text-xs bg-slate-500 hover:bg-slate-600 text-white py-2 px-4 w-fit rounded">
-                  Baca Selengkapnya
-                </Link>
               </div>
-            </div>
-            <div className="ml:flex ml:flex-row flex flex-col ml:gap-6 gap-4 mx-auto">
-              <Image src={"/assets/kegiatan/a.jpeg"} alt="temu responden" width={1000} height={800} className="ml:h-64 ml:w-64 sm:h-52 w-full h-32 mx-auto object-center object-cover rounded" />
 
-              <div className="flex flex-col">
-                <div className="flex justify-between items-start ml:pr-6">
-                  <h2 className="ml:text-2xl sm:text-lg text-sm font-bold font-serif text-gray-700 mb-4 ml:mt-2">
-                    {judul.length <= 33 ? judul : judul.slice(0, 33) + '...'}
-                    <Link href={"/news/temu-responden-2024"} className="block ml:hidden hover:text-blue-500 text-gray-500 text-xs sm:text-sm font-normal">Baca Selengkapnya...</Link>
-                  </h2>
-                  <p className="sm:text-base sm:block hidden text-xs text-gray-500 text-nowrap">09 Desember 2024</p>
-                </div>
-
-                <p className="hidden ml:block text-gray-700 mb-4 ml:mt-2 text-justify ml:h-fit ml:overflow-visible h-52 overflow-hidden">
-                  {article.slice(0, 400) + '.......'}
-                </p>
-                <Link href={"/news/temu-responden-2024"} className="hidden ml:block sm:text-base text-xs bg-slate-500 hover:bg-slate-600 text-white py-2 px-4 w-fit rounded">
-                  Baca Selengkapnya
-                </Link>
-              </div>
-            </div>
-            <div className="ml:flex ml:flex-row flex flex-col ml:gap-6 gap-4 mx-auto">
-              <Image src={"/assets/kegiatan/a.jpeg"} alt="temu responden" width={1000} height={800} className="ml:h-64 ml:w-64 sm:h-52 w-full h-32 mx-auto object-center object-cover rounded" />
-
-              <div className="flex flex-col">
-                <div className="flex justify-between items-start ml:pr-6">
-                  <h2 className="ml:text-2xl sm:text-lg text-sm font-bold font-serif text-gray-700 mb-4 ml:mt-2">
-                    {judul.length <= 33 ? judul : judul.slice(0, 33) + '...'}
-                    <Link href={"/news/temu-responden-2024"} className="block ml:hidden hover:text-blue-500 text-gray-500 text-xs sm:text-sm font-normal">Baca Selengkapnya...</Link>
-                  </h2>
-                  <p className="sm:text-base sm:block hidden text-xs text-gray-500 text-nowrap">09 Desember 2024</p>
-                </div>
-
-                <p className="hidden ml:block text-gray-700 mb-4 ml:mt-2 text-justify ml:h-fit ml:overflow-visible h-52 overflow-hidden">
-                  {article.slice(0, 400) + '.......'}
-                </p>
-                <Link href={"/news/temu-responden-2024"} className="hidden ml:block sm:text-base text-xs bg-slate-500 hover:bg-slate-600 text-white py-2 px-4 w-fit rounded">
-                  Baca Selengkapnya
-                </Link>
-              </div>
-            </div>
+            ))}
 
           </div>
         </section>
