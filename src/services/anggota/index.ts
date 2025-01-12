@@ -52,33 +52,3 @@ export const getBendahara = async (): Promise<Anggota[]> => {
     const result = await query<Anggota[]>("SELECT * FROM anggota WHERE jabatan LIKE 'Bendahara%';");
     return result;
 };
-
-export const getDivisiKominfo = async (): Promise<Anggota[]> => {
-    const result = await query<Anggota[]>("SELECT * FROM anggota WHERE divisi_id = 1;");
-    return result;
-}
-
-export const getDivisiInternasionalisasi = async (): Promise<Anggota[]> => {
-    const result = await query<Anggota[]>("SELECT * FROM anggota WHERE divisi_id = 2;");
-    return result;
-}
-
-export const getDivisiPendidikan = async (): Promise<Anggota[]> => {
-    const result = await query<Anggota[]>("SELECT * FROM anggota WHERE divisi_id = 3;");
-    return result;
-}
-
-export const getDivisiLingkungan = async (): Promise<Anggota[]> => {
-    const result = await query<Anggota[]>("SELECT * FROM anggota WHERE divisi_id = 4;");
-    return result;
-}
-
-export const getDivisiPengabdian = async (): Promise<Anggota[]> => {
-    const result = await query<Anggota[]>("SELECT * FROM anggota WHERE divisi_id = 5;");
-    return result;
-}
-
-export const getDivisiKewirausahaan = async (): Promise<Anggota[]> => {
-    const result = await query<Anggota[]>("SELECT * FROM anggota WHERE divisi_id = 6;");
-    return result;
-}

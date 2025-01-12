@@ -19,14 +19,11 @@ export interface News {
     meta_keywords: string;
     meta_image: string;
     meta_url: string
-}
-
-export interface NewsDetail extends News {
     author_name: string
 }
 
-export const getAllNews = async (): Promise<NewsDetail[]> => {
-    const result = await query<(News & { author_name: string })[]>(`
+export const getAllNews = async (): Promise<News[]> => {
+    const result = await query<News[]>(`
         SELECT news.*, anggota.name AS author_name FROM news INNER JOIN anggota ON news.author = anggota.id`
     );
     return result.map((e) => ({
@@ -37,8 +34,25 @@ export const getAllNews = async (): Promise<NewsDetail[]> => {
     }));
 };
 
-export const getNewsByID = async (id: number): Promise<NewsDetail[]> => {
-    const result = await query<(News & { author_name: string })[]>(
+export interface Gallery {
+    image: string
+    title: string
+    date: string
+    slug: string
+}
+
+export const getAllGallery = async (): Promise<Gallery[]> => {
+    const result = await query<Gallery[]>(`
+        SELECT news.image, news.title, news.date, news.slug FROM news`
+    );
+    return result.map((e) => ({
+        ...e,
+        date: new Date(e.date).toISOString(),
+    }));
+};
+
+export const getNewsByID = async (id: number): Promise<News[]> => {
+    const result = await query<News[]>(
         `SELECT news.*, anggota.name AS author_name FROM news INNER JOIN anggota ON news.author = anggota.id WHERE news.id = ?;`,
         [id]
     );
@@ -50,9 +64,8 @@ export const getNewsByID = async (id: number): Promise<NewsDetail[]> => {
     }));
 };
 
-
-export const getNewsBySlug = async (slug: string): Promise<NewsDetail[]> => {
-    const result = await query<NewsDetail[]>(
+export const getNewsBySlug = async (slug: string): Promise<News[]> => {
+    const result = await query<News[]>(
         `SELECT 
             news.*, 
             anggota.name AS author_name 

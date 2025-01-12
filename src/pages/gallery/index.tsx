@@ -2,14 +2,20 @@ import Image from "next/image";
 import Footer from "@/component/footer";
 import Navbar from "@/component/navbar";
 import Head from "next/head";
+import { Gallery, getAllGallery } from "@/services/news";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps() {
+  const gallery = await getAllGallery()
   return {
-    props: {},
+    props: { gallery },
   };
 }
+const GalleryPage = ({ gallery }: { gallery: Gallery[] }) => {
+  const { push } = useRouter()
 
-const GalleryPage = () => {
+  console.log({ gallery });
+
   return (
     <>
       <Head>
@@ -41,10 +47,12 @@ const GalleryPage = () => {
 
         <section>
           <div className="flex flex-wrap md:gap-14 sm:gap-12 xxs:gap-8 gap-8 justify-center items-start ml:px-20 md:px-14 sm:px-12 xxs:px-8 px-2 pt-6">
-            <div className="h-52 w-80">
-              <Image src={"/assets/kegiatan/a.jpeg"} alt="" width={500} height={500} className="w-full h-full object-center object-cover rounded" />
-              <p className="text-center text-gray-700 mb-4 mt-2">Temu Responden dan Seminar 2024</p>
-            </div>
+            {gallery.map((e, i) => (
+              <div key={i} className="h-52 w-80" onClick={() => push(`/news/${e.slug}`)}>
+                <Image src={e.image} alt={e.title} width={500} height={500} className="w-full h-full object-center object-cover rounded" />
+                <p className="text-center text-gray-700 mb-4 mt-2">Temu Responden dan Seminar 2024</p>
+              </div>
+            ))}
             <div className="h-52 w-80 p-4 rounded-lg bg-slate-400">gallery 2</div>
             <div className="h-52 w-80 p-4 rounded-lg bg-slate-400">gallery 3</div>
             <div className="h-52 w-80 p-4 rounded-lg bg-slate-400">gallery 4</div>

@@ -9,6 +9,7 @@ import { formatDate } from "@/utils/convert-date"
 import Image from "next/image"
 import { validateImageExtension } from "@/utils/utils"
 import { ToasterContext } from "@/context/toaster"
+import { useRouter } from "next/navigation"
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false })
 
@@ -40,10 +41,12 @@ const UpdateNews = ({ anggota, news }: { anggota: NamaAnggota[], news: News[] })
         meta_author: news[0].meta_author,
         meta_keywords: news[0].meta_keywords,
         meta_image: news[0].meta_image,
-        meta_url: news[0].meta_url
+        meta_url: news[0].meta_url,
+        author_name: news[0].author_name
     }
     const [newsState, setNewsState] = useState<News>(DefaultNews);
     const { setToaster } = useContext(ToasterContext)
+    const { push } = useRouter();
 
     const options: QuillOptions = {
         modules: {
@@ -71,9 +74,10 @@ const UpdateNews = ({ anggota, news }: { anggota: NamaAnggota[], news: News[] })
             if (data.statusCode === 200) {
                 setToaster({ variant: "success", message: "Success Update News" })
                 setLoading(false)
+                push("/admin/news")
                 return
-            } else if (data.statusCode === 500) {
-                setToaster({ variant: "danger", message: "Failed Update News" })
+            } else if (data.statusCode === 400) {
+                setToaster({ variant: "warning", message: "Invalid Date Format" })
                 setLoading(false)
                 return
             } else {
@@ -82,8 +86,9 @@ const UpdateNews = ({ anggota, news }: { anggota: NamaAnggota[], news: News[] })
                 return
             }
         } catch (error) {
-            console.error("Error uploading image:", error);
+            console.error("Error uploading news:", error);
             setLoading(false)
+            return
         } finally {
             setLoading(false)
         }

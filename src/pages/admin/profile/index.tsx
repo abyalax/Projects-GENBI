@@ -18,6 +18,11 @@ export async function getServerSideProps() {
     };
 }
 
+interface DynamicBPH {
+    ketua: Anggota;
+    anggota: Anggota[];
+}
+
 const AdminProfile = ({ kepengurusan, bph }: { kepengurusan: Kepengurusan, bph: BPH }) => {
     const routes = SidebarNavigation().routesGovernance
     const routesGovernance = useMemo(() => routes, [routes])
@@ -29,7 +34,7 @@ const AdminProfile = ({ kepengurusan, bph }: { kepengurusan: Kepengurusan, bph: 
     const router = useRouter();
 
     const dynamicKepengurusan: Anggota[] = kepengurusan[path as keyof Kepengurusan] || [];
-    const dynamicBPH: Anggota[] = bph[divisi as keyof BPH] || [];
+    const dynamicBPH: DynamicBPH = bph[divisi as keyof BPH] || [];
 
     const { name, fakultas, prodi, image, semester, id, email, phone } = dynamicKepengurusan[0]
 
@@ -64,7 +69,7 @@ const AdminProfile = ({ kepengurusan, bph }: { kepengurusan: Kepengurusan, bph: 
         <AdminLayout>
             <h2 className="text-2xl font-semibold my-8 fixed">GenBI Governance Structure </h2>
             <main className="flex gap-6">
-                <aside className="w-1/4 h-fit bg-white p-2 rounded-lg fixed top-32">
+                <aside className="w-[22rem] h-fit bg-white p-2 rounded-lg fixed top-32">
                     <nav className="flex flex-col gap-2">
                         {routesGovernance?.primary?.map((route, index) => (
                             <button key={index} onClick={() => { setPath(route.path); setTitle(route.name) }} className={`flex items-center gap-2 px-4 py-2 mr-28 text-lg hover:bg-slate-200 ${route.name === path ? "bg-toska text-white hover:bg-toska-dark" : ""} w-full cursor-pointer rounded`}>
@@ -89,8 +94,11 @@ const AdminProfile = ({ kepengurusan, bph }: { kepengurusan: Kepengurusan, bph: 
                         ))}
                     </nav>
                 </aside>
+
                 {hide && title.includes("Divisi") ? (
-                    <AdminBPH member={dynamicBPH} divisi={title} />
+                    <div className="">
+                        <AdminBPH member={dynamicBPH.anggota} divisi={title} />
+                    </div>
                 ) : (
                     <main className="pl-[25rem] pt-20 w-full">
                         <div className="rounded-lg bg-white p-4">

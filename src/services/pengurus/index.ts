@@ -1,5 +1,5 @@
-import { getDivisiKewirausahaan, getDivisiLingkungan, getDivisiPendidikan, getDivisiPengabdian } from './../anggota/index';
-import { Anggota, getBendahara, getDivisiInternasionalisasi, getDivisiKominfo, getKetua, getSekretaris, getWakilKetua } from "../anggota";
+import { Anggota, getBendahara, getKetua, getSekretaris, getWakilKetua } from "../anggota";
+import { getAnggotaDivisiByID } from "../divisi";
 
 export interface Kepengurusan {
     ketua: Anggota[];
@@ -9,12 +9,30 @@ export interface Kepengurusan {
 }
 
 export interface BPH {
-    kominfo: Anggota[];
-    internasionalisasi: Anggota[];
-    pendidikan: Anggota[];
-    lingkungan: Anggota[];
-    pengabdian: Anggota[];
-    kewirausahaan: Anggota[];
+    kominfo: {
+        ketua: Anggota,
+        anggota: Anggota[]
+    }
+    internasionalisasi: {
+        ketua: Anggota,
+        anggota: Anggota[]
+    }
+    pendidikan: {
+        ketua: Anggota,
+        anggota: Anggota[]
+    }
+    lingkungan: {
+        ketua: Anggota,
+        anggota: Anggota[]
+    }
+    pengabdian: {
+        ketua: Anggota,
+        anggota: Anggota[]
+    }
+    kewirausahaan: {
+        ketua: Anggota,
+        anggota: Anggota[]
+    }
 }
 
 export const getKepengurusan: () => Promise<Kepengurusan> = async () => {
@@ -32,12 +50,12 @@ export const getKepengurusan: () => Promise<Kepengurusan> = async () => {
 }
 
 export const getBPH: () => Promise<BPH> = async () => {
-    const kominfo = await getDivisiKominfo()
-    const internasionalisasi = await getDivisiInternasionalisasi()
-    const pendidikan = await getDivisiPendidikan();
-    const lingkungan = await getDivisiLingkungan();
-    const pengabdian = await getDivisiPengabdian();
-    const kewirausahaan = await getDivisiKewirausahaan()
+    const kominfo = await getAnggotaDivisiByID(1)
+    const internasionalisasi = await getAnggotaDivisiByID(2)
+    const pendidikan = await getAnggotaDivisiByID(3)
+    const lingkungan = await getAnggotaDivisiByID(4)
+    const pengabdian = await getAnggotaDivisiByID(5)
+    const kewirausahaan = await getAnggotaDivisiByID(6)
 
     const data = { kominfo, internasionalisasi, pendidikan, lingkungan, pengabdian, kewirausahaan }
     return data

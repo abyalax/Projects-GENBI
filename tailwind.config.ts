@@ -23,6 +23,8 @@ const config: Config = {
     "./src/pages/admin/news/*.{js,ts,jsx,tsx,mdx}",
     "./src/pages/admin/news/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/pages/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/news/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/news/*.{js,ts,jsx,tsx,mdx}",
     "./src/component/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/component/*.{js,ts,jsx,tsx,mdx}",
     "./src/context/*.{js,ts,jsx,tsx,mdx}",

@@ -14,9 +14,7 @@ export async function getServerSideProps({ params }: { params: { id: number } })
 }
 
 const DetailAnggota = ({ anggota }: { anggota: Anggota[] }) => {
-
     console.log({ anggota });
-
     return (
         <>
             <Head>

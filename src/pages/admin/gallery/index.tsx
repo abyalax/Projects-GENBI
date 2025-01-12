@@ -85,7 +85,6 @@ const AdminGallery = () => {
         <div className="col-span-1 w-72 h-56 bg-white rounded-md p-2 border-2 border-slate-200">
           <Image src="/assets/kegiatan/f.jpeg" alt="kegiatan" width={500} height={300} className="w-64 h-44 mx-auto object-cover object-center rounded-md" />
           <p className="text-center my-2 text-sm font-semibold">Dokumentasi</p>
-
         </div>
 
       </div>

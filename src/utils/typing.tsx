@@ -41,8 +41,7 @@ const TypingAnimation = ({ text, speed = 100, delay = 2000, className }: TypingP
       }
     }
   }, [charIndex, textIndex, isDeleting, text, speed, delay]);
-
-  return <span className={className}>{displayedText}</span>;
+  return displayedText ? <span className={className}>{displayedText}</span> : <span>|</span>
 };
 
 export default TypingAnimation;

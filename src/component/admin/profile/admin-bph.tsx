@@ -1,6 +1,7 @@
 import { Anggota } from "@/services/anggota";
 import Image from "next/image";
 import SidebarNavigation from "../__routes";
+import { useRouter } from "next/router";
 
 const AdminBPH = ({ member, divisi }: { member: Anggota[], divisi: string }) => {
 
@@ -8,6 +9,7 @@ const AdminBPH = ({ member, divisi }: { member: Anggota[], divisi: string }) => 
     const icon = routesGovernance.bph.find((e) => e.name === divisi.split("Divisi ")[1])?.icon || null
     const ketuaDivisi = member?.find((e) => e.jabatan === "Chief Operating Officer") || null
     const pureMember = member?.filter((e) => e.jabatan !== "Chief Operating Officer") || []
+    const { push } = useRouter()
 
     console.log({ routesGovernance });
     console.log({ ketuaDivisi });
@@ -73,8 +75,8 @@ const AdminBPH = ({ member, divisi }: { member: Anggota[], divisi: string }) => 
                             <h2 className="mt-6 text-lg font-semibold">Member</h2>
                             <ul>
                                 {pureMember?.map((e, index) => (
-                                    <li key={index} className="my-2 flex justify-between border-b border-slate-300 p-2">
-                                        <div className="flex gap-4">
+                                    <li key={index} className="my-2 flex justify-between border-b border-slate-300 p-2 cursor-pointer hover:bg-slate-300 rounded-lg" onClick={() => push(`/admin/profile/${e.id}`)}>
+                                        <div className="flex gap-4" >
                                             <Image src={e.image ? e.image : "/assets/img/profile.jpg"} alt="" width={200} height={200} className="object-cover object-center w-20 h-20 aspect-square rounded-full" />
                                             <div className="">
                                                 <h2 className="font-semibold">{e.name}</h2>

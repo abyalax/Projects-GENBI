@@ -3,8 +3,10 @@ import { QuillOptions } from "react-quill"
 import AdminLayout from "../../../component/admin/__layout"
 import { NamaAnggota, getAllNamaAnggota } from "@/services/anggota"
 import { CldUploadWidget, CloudinaryUploadWidgetInfo, CloudinaryUploadWidgetResults } from "next-cloudinary"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { News } from "@/services/news"
+import { ToasterContext } from "@/context/toaster"
+import { useRouter } from "next/router"
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false })
 
@@ -33,12 +35,15 @@ const DefaultNews: News = {
     meta_author: "",
     meta_keywords: "",
     meta_image: "",
-    meta_url: ""
+    meta_url: "",
+    author_name: ""
 }
 
 const CreateNews = ({ anggota }: { anggota: NamaAnggota[] }) => {
     const [loading, setLoading] = useState<boolean>(false)
     const [news, setNews] = useState<News>(DefaultNews);
+    const { setToaster } = useContext(ToasterContext)
+    const { push } = useRouter()
 
     const options: QuillOptions = {
         modules: {
@@ -61,8 +66,20 @@ const CreateNews = ({ anggota }: { anggota: NamaAnggota[] }) => {
                 body: JSON.stringify(news),
             })
             const data = await res.json();
-            console.log(data);
-            setLoading(false)
+            if (data.statusCode === 200) {
+                setToaster({ variant: "success", message: "Success Update News" })
+                setLoading(false)
+                push("/admin/news")
+                return
+            } else if (data.statusCode === 400) {
+                setToaster({ variant: "warning", message: "Invalid Date Format" })
+                setLoading(false)
+                return
+            } else {
+                setToaster({ variant: "danger", message: "Failed Update News" })
+                setLoading(false)
+                return
+            }
         } catch (error) {
             console.error("Error uploading image:", error);
             setLoading(false)
@@ -80,7 +97,6 @@ const CreateNews = ({ anggota }: { anggota: NamaAnggota[] }) => {
             image,
             meta_image: image
         }));
-
     };
 
     return (
@@ -128,7 +144,7 @@ const CreateNews = ({ anggota }: { anggota: NamaAnggota[] }) => {
                                 uploadPreset="GenBI Preset"
                                 onSuccess={handleUpload}
                                 onError={(error) => console.error("Upload Error:", error)}>
-                                {({ open }: any) => (
+                                {({ open }) => (
                                     <button type="button" className="flex gap-4 justify-center items-center px-4 py-1 w-fit rounded-lg bg-toska-light text-center font-semibold text-slate-200 hover:text-white hover:bg-toska-dark hover:font-bold" onClick={() => open()}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" className="bi bi-cloud-arrow-up" viewBox="0 0 16 16">
                                             <path fillRule="evenodd" d="M7.646 5.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708z" />

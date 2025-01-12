@@ -4,13 +4,10 @@ import Navbar from "@/component/navbar";
 import Link from "next/link";
 import Head from "next/head";
 import { getAllNews, News } from "@/services/news";
-import QuillContent from "@/component/quill-content";
 import { formatDate } from "@/utils/convert-date";
 
 export async function getServerSideProps() {
-
   const news = await getAllNews()
-
   return {
     props: { news },
   };
@@ -34,7 +31,7 @@ const NewsPage = ({ news }: { news: News[] }) => {
         <link rel="icon" href="/assets/genbi/logo-genbi.png" type="image/png" />
       </Head>
 
-      <main className="w-full bg-[#edf0f7] min-h-screen">
+      <main className="min-w-[1080px] w-full bg-[#edf0f7] min-h-screen">
         <Navbar />
 
         <div className="relative pt-24 pb-2 ml:mx-32 sm:mx-12 xs:mx-8 xxs:mx-4 mx-2 border-b-2 border-slate-500">
@@ -73,7 +70,7 @@ const NewsPage = ({ news }: { news: News[] }) => {
             {news?.map((e, i) => (
               <div key={i} className="w-full ml:flex ml:flex-row flex flex-col ml:gap-6 gap-4 mx-auto">
 
-                <Image src={"/assets/kegiatan/a.jpeg"} alt="temu responden" width={1000} height={800} className="ml:h-64 ml:w-64 sm:h-52 w-full h-32 object-center object-cover rounded" />
+                <Image src={e.image ?? "/assets/kegiatan/a.jpeg"} alt="temu responden" width={1000} height={800} className="ml:h-64 ml:w-64 sm:h-52 w-full h-32 object-center object-cover rounded" />
 
                 <div className="flex flex-col w-full">
                   <div className="w-full flex justify-between items-start ml:pr-6">

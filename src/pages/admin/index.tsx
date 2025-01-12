@@ -5,6 +5,7 @@ import { ToasterContext } from "@/context/toaster"
 const AdminHome = () => {
 
     const { setToaster } = useContext(ToasterContext)
+
     const handleClicked = (variant: "" | "success" | "info" | "warning" | "danger") => {
         setToaster({
             variant,
