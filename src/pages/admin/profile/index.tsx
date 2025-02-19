@@ -9,6 +9,8 @@ import { CldUploadWidget, CloudinaryUploadWidgetInfo, CloudinaryUploadWidgetResu
 import { Anggota } from "@/services/anggota";
 import { useRouter } from "next/router";
 import { BPH, getBPH, getKepengurusan, Kepengurusan } from "@/services/pengurus";
+import Link from "next/link";
+import { FaEdit } from "react-icons/fa";
 
 export async function getServerSideProps() {
     const kepengurusan = await getKepengurusan();
@@ -26,12 +28,12 @@ interface DynamicBPH {
 const AdminProfile = ({ kepengurusan, bph }: { kepengurusan: Kepengurusan, bph: BPH }) => {
     const routes = SidebarNavigation().routesGovernance
     const routesGovernance = useMemo(() => routes, [routes])
+    const router = useRouter();
 
     const [path, setPath] = useState(routesGovernance.primary[0].path)
     const [divisi, setDivisi] = useState(routesGovernance.bph[0].path)
     const [title, setTitle] = useState(routesGovernance.primary[0].name)
     const [hide, setHide] = useState(false)
-    const router = useRouter();
 
     const dynamicKepengurusan: Anggota[] = kepengurusan[path as keyof Kepengurusan] || [];
     const dynamicBPH: DynamicBPH = bph[divisi as keyof BPH] || [];
@@ -53,7 +55,6 @@ const AdminProfile = ({ kepengurusan, bph }: { kepengurusan: Kepengurusan, bph: 
             console.error("Error uploading image:", error);
         }
     }
-
 
     const handleUpload = async (result: CloudinaryUploadWidgetResults) => {
         const resultUpload = result.info as CloudinaryUploadWidgetInfo
@@ -96,8 +97,8 @@ const AdminProfile = ({ kepengurusan, bph }: { kepengurusan: Kepengurusan, bph: 
                 </aside>
 
                 {hide && title.includes("Divisi") ? (
-                    <div className="">
-                        <AdminBPH member={dynamicBPH.anggota} divisi={title} />
+                    <div>
+                        <AdminBPH member={dynamicBPH.anggota} ketua={dynamicBPH.ketua} divisi={title} />
                     </div>
                 ) : (
                     <main className="pl-[25rem] pt-20 w-full">
@@ -111,35 +112,42 @@ const AdminProfile = ({ kepengurusan, bph }: { kepengurusan: Kepengurusan, bph: 
                                 )
                             ) : (
                                 <>
-                                    <div className="flex gap-7 p-4 m-4 border border-slate-300 rounded-lg">
-                                        <div>
-                                            <Image className="w-36 h-36 object-cover object-center rounded-full" src={image ? image : "/assets/dummy/1.jpg"} width={500} height={500} alt="Image Ketua" />
-                                            <CldUploadWidget
-                                                uploadPreset="GenBI Preset"
-                                                onSuccess={handleUpload}
-                                                onClose={handleOnClose}
-                                                onError={(error) => console.error("Upload Error:", error)}>
-                                                {({ open }: any) => (
-                                                    <button type="button" className="text-center w-full font-semibold text-gray-600 hover:text-toska-light hover:font-bol" onClick={() => open()}>
-                                                        Unggah Foto
-                                                    </button>
-                                                )}
-                                            </CldUploadWidget>
-                                        </div>
-                                        <div className="flex gap-4 border-slate-300 rounded-lg p-2">
-                                            <div className="flex flex-col gap-2 ">
-                                                <h2 className="font-semibold">Nama</h2>
-                                                <h2 className="font-semibold">Fakultas</h2>
-                                                <h2 className="font-semibold">Prodi</h2>
-                                                <h2 className="font-semibold">Semester</h2>
+                                    <div className="flex justify-between p-4 m-4 border border-slate-300 rounded-lg">
+                                        <div className="flex gap-7">
+                                            <div>
+                                                <Image className="w-36 h-36 object-cover object-center rounded-full" src={image ? image : "/assets/dummy/1.jpg"} width={500} height={500} alt="Image Ketua" />
+                                                <CldUploadWidget
+                                                    uploadPreset="GenBI Preset"
+                                                    onSuccess={handleUpload}
+                                                    onClose={handleOnClose}
+                                                    onError={(error) => console.error("Upload Error:", error)}>
+                                                    {({ open }: any) => (
+                                                        <button type="button" className="text-center w-full font-semibold text-gray-600 hover:text-toska-light hover:font-bol" onClick={() => open()}>
+                                                            Unggah Foto
+                                                        </button>
+                                                    )}
+                                                </CldUploadWidget>
                                             </div>
-                                            <div className="flex flex-col gap-2">
-                                                <p>: {name}</p>
-                                                <p>: {fakultas} </p>
-                                                <p>: {prodi}</p>
-                                                <p>: {semester}</p>
+                                            <div className="flex gap-4 border-slate-300 rounded-lg p-2">
+                                                <div className="flex flex-col gap-2 ">
+                                                    <h2 className="font-semibold">Nama</h2>
+                                                    <h2 className="font-semibold">Fakultas</h2>
+                                                    <h2 className="font-semibold">Prodi</h2>
+                                                    <h2 className="font-semibold">Semester</h2>
+                                                </div>
+                                                <div className="flex flex-col gap-2">
+                                                    <p>: {name}</p>
+                                                    <p>: {fakultas} </p>
+                                                    <p>: {prodi}</p>
+                                                    <p>: {semester}</p>
+                                                </div>
                                             </div>
                                         </div>
+
+                                        <Link href={`/admin/profile/${id}`} className="flex items-center gap-2 px-4 py-2 w-fit h-fit border-2 hover:border-b-4 border-slate-200 rounded-lg font-semibold hover:font-bold">
+                                            <FaEdit size={20} />
+                                            Update
+                                        </Link>
                                     </div>
                                     <h2 className="text-xl font-semibold my-6">Personal Information</h2>
                                     <div className="border border-slate-300 rounded-lg p-4 m-4 flex gap-9">

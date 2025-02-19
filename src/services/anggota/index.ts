@@ -24,7 +24,7 @@ export interface NamaAnggota {
 }
 
 export const getAllNamaAnggota = async (): Promise<NamaAnggota[]> => {
-    const result = await query<NamaAnggota[]>("SELECT id, name FROM anggota;");
+    const result = await query<NamaAnggota[]>("SELECT id, name FROM anggota WHERE status = 'active';");
     return result;
 };
 

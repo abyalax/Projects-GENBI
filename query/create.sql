@@ -16,6 +16,7 @@ CREATE TABLE anggota (
     semester INT,
     jabatan VARCHAR(255),
     divisi_id INT,                        
+    status ENUM('active', 'inactive') NOT NULL DEFAULT 'active',
     FOREIGN KEY (divisi_id) REFERENCES divisi(id) ON DELETE SET NULL
 );
 
@@ -35,10 +36,19 @@ CREATE TABLE agenda (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     content TEXT,                           
-    planned_date DATE,
-    completed_date DATE,
+    start DATE,
+    end DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE agenda_participants (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    agenda_id INT NOT NULL,
+    participant_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (agenda_id) REFERENCES agenda(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (participant_id) REFERENCES anggota(id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE user (

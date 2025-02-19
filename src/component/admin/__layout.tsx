@@ -35,7 +35,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
 
             </aside>
 
-            <main className="min-w-full bg-[#edf0f7] min-h-fit py-6 pr-6 pl-72">
+            <main className="min-w-full bg-[#edf0f7] min-h-full py-6 pr-6 pl-72">
                 {children}
             </main>
 

@@ -76,7 +76,7 @@ Table agenda
  - description
  - content
  - planned_date
- - completed_date
+ - end
  - created_at
  - updated_at
 

@@ -11,3 +11,4 @@ UPDATE news SET
     meta_url = 'http://localhost:3000/news/temu-responden-2024',
     category = 'Undangan Bank Indonesia' 
 WHERE id = 2;
+

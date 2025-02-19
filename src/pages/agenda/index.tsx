@@ -20,7 +20,7 @@ const AgendaPage = () => {
     const updateWindowWidth = () => setWindowWidth(window.innerWidth);
 
     if (typeof window !== 'undefined') {
-      updateWindowWidth(); // Set nilai awal
+      updateWindowWidth();
       window.addEventListener('resize', updateWindowWidth);
     }
 
@@ -33,14 +33,14 @@ const AgendaPage = () => {
     const event = e.event;
     let eventDetails = `Event: ${event.title}\n`;
     eventDetails += `Description: ${event.extendedProps.description}\n`;
-    eventDetails += `Location: ${event.extendedProps.location}\n`;
+    eventDetails += `Keterangan: ${event.extendedProps.keterangan}\n`;
     if (event.extendedProps.additionalInfo) {
       eventDetails += `Additional Info: ${event.extendedProps.additionalInfo}\n`;
     }
     if (event.extendedProps.participants) {
       eventDetails += `Participants:\n`;
       event.extendedProps.participants.forEach((participant: any) => {
-        eventDetails += `- ${participant.name} (${participant.location})\n`;
+        eventDetails += `- ${participant.name}  ${participant.keterangan}\n`;
       });
     }
     alert(eventDetails);

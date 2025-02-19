@@ -2,19 +2,16 @@ import { Anggota } from "@/services/anggota";
 import Image from "next/image";
 import SidebarNavigation from "../__routes";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 
-const AdminBPH = ({ member, divisi }: { member: Anggota[], divisi: string }) => {
+const AdminBPH = ({ member, divisi, ketua }: { member: Anggota[], divisi: string, ketua: Anggota }) => {
 
     const { routesGovernance } = SidebarNavigation()
-    const icon = routesGovernance.bph.find((e) => e.name === divisi.split("Divisi ")[1])?.icon || null
-    const ketuaDivisi = member?.find((e) => e.jabatan === "Chief Operating Officer") || null
-    const pureMember = member?.filter((e) => e.jabatan !== "Chief Operating Officer") || []
     const { push } = useRouter()
-
-    console.log({ routesGovernance });
-    console.log({ ketuaDivisi });
-    console.log({ pureMember });
-
+    const data = useMemo(() => {
+        const icon = routesGovernance.bph.find((e) => e.name === divisi.split("Divisi ")[1])?.icon || null
+        return { icon }
+    }, [divisi, routesGovernance.bph])
 
     return (
         <main className="pl-[25rem] pt-20">
@@ -24,9 +21,9 @@ const AdminBPH = ({ member, divisi }: { member: Anggota[], divisi: string }) => 
 
                     <div className="flex flex-col items-center w-full">
                         <div className="w-36 h-36 flex justify-center items-start">
-                            {icon}
+                            {data.icon}
                         </div>
-                        <h2 className="text-lg font-semibold font-serif">{ketuaDivisi?.name}</h2>
+                        <h2 className="text-lg font-semibold font-serif">{ketua.name}</h2>
                         <p>Chief Operating Officer ( CO )</p>
                         <div className="w-full px-8 py-2">
                             <h2 className="text-lg font-semibold">Visi</h2>
@@ -59,22 +56,22 @@ const AdminBPH = ({ member, divisi }: { member: Anggota[], divisi: string }) => 
                     <div className="flex flex-col items-center w-full">
                         <div className="w-full p-2">
                             <h2 className="text-lg font-semibold">Chief Operating Officer</h2>
-                            <ul className="mb-4">
+                            <ul className="mb-4 hover:bg-slate-300 cursor-pointer rounded-lg" onClick={() => push(`/admin/profile/${ketua.id}`)}>
                                 <li className="my-2 flex justify-between border-b border-slate-300 p-2">
                                     <div className="flex gap-4">
-                                        <Image src={ketuaDivisi?.image ? ketuaDivisi?.image : "/assets/img/profile.jpg"} alt="" width={200} height={200} className="object-cover object-center w-20 h-20 aspect-square rounded-full" />
+                                        <Image src={ketua.image ? ketua.image : "/assets/img/profile.jpg"} alt="" width={200} height={200} className="object-cover object-center w-20 h-20 aspect-square rounded-full" />
                                         <div className="">
-                                            <h2 className="font-semibold">{ketuaDivisi?.name}</h2>
-                                            <p className="text-sm">{ketuaDivisi?.fakultas}</p>
-                                            <p className="text-sm">{ketuaDivisi?.prodi}</p>
+                                            <h2 className="font-semibold">{ketua.name}</h2>
+                                            <p className="text-sm">{ketua.fakultas}</p>
+                                            <p className="text-sm">{ketua.prodi}</p>
                                         </div>
                                     </div>
-                                    <span className="font-semibold text-sm px-2 py-1 bg-slate-300 w-fit h-fit rounded-lg">Semester {ketuaDivisi?.semester}</span>
+                                    <span className="font-semibold text-sm px-2 py-1 bg-slate-300 w-fit h-fit rounded-lg">Semester {ketua.semester}</span>
                                 </li>
                             </ul>
                             <h2 className="mt-6 text-lg font-semibold">Member</h2>
                             <ul>
-                                {pureMember?.map((e, index) => (
+                                {member.map((e, index) => (
                                     <li key={index} className="my-2 flex justify-between border-b border-slate-300 p-2 cursor-pointer hover:bg-slate-300 rounded-lg" onClick={() => push(`/admin/profile/${e.id}`)}>
                                         <div className="flex gap-4" >
                                             <Image src={e.image ? e.image : "/assets/img/profile.jpg"} alt="" width={200} height={200} className="object-cover object-center w-20 h-20 aspect-square rounded-full" />

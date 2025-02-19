@@ -34,6 +34,18 @@ export const getAllNews = async (): Promise<News[]> => {
     }));
 };
 
+export const getHotNews = async (): Promise<News[]> => {
+    const result = await query<News[]>(`
+        SELECT news.*, anggota.name AS author_name FROM news INNER JOIN anggota ON news.author = anggota.id ORDER BY news.created_at DESC LIMIT 3`
+    );
+    return result.map((e) => ({
+        ...e,
+        date: new Date(e.date).toISOString(),
+        created_at: new Date(e.created_at).toISOString(),
+        updated_at: new Date(e.updated_at).toISOString(),
+    }));
+};
+
 export interface Gallery {
     image: string
     title: string

@@ -45,12 +45,9 @@ const responseInternalServerError = (res:NextApiResponse) => {
     return responseAPI(res, false, 500, 'internal server error')
 }
 
-const responseError = (res:NextApiResponse, error: string) => {
-    return responseAPI(res, false, 500, error)
-}
 export {
     responseData, responseSuccess, responseNotFound, responseFailed,
     responseDenied, responseMethodNotAllowed, responseUnauthorized,
     responseUnauthenticated, responseInternalServerError,
-    responseAPI, responseError
+    responseAPI
 }

@@ -1,18 +1,22 @@
 import dynamic from "next/dynamic";
 import AdminLayout from "../../../component/admin/__layout"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { events } from "@/utils/dummy-data";
-import interactionPlugin from '@fullcalendar/interaction';
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import styles from "./styles.module.css"
 import { EventClickArg } from "@fullcalendar/core";
+import { WindowContext } from "@/context/window";
+import CreateAgenda from "@/component/admin/agenda/create";
+import UpdateAgenda from "@/component/admin/agenda/update";
 
 const FullCalendar = dynamic(() => import('@fullcalendar/react'), { ssr: false });
 
 const AdminAgenda = () => {
     const [windowWidth, setWindowWidth] = useState(1024);
+    const { setWindow } = useContext(WindowContext)
 
     useEffect(() => {
         const updateWindowWidth = () => setWindowWidth(window.innerWidth);
@@ -41,8 +45,25 @@ const AdminAgenda = () => {
                 eventDetails += `- ${participant.name} (${participant.location})\n`;
             });
         }
-        alert(eventDetails);
+        console.log(eventDetails);
+        setWindow({
+            windowElement: {
+                title: "Update Agenda",
+                children: <UpdateAgenda data={event}/>
+            }
+        })
     };
+
+    const handleDateClick = (info: DateClickArg) => {
+        console.log(info.dateStr);
+        setWindow({
+            windowElement: {
+                title: "Buat Agenda Baru",
+                children: <CreateAgenda />
+            }
+        })
+    };
+
     return (
         <AdminLayout>
             <h2 className="text-2xl font-semibold my-8">Manage Agenda GenBI</h2>
@@ -56,7 +77,7 @@ const AdminAgenda = () => {
                         timeGridPlugin
                     ]}
                     initialView="dayGridMonth"
-                    dateClick={(info) => alert(`Tanggal yang diklik: ${info.dateStr}`)}
+                    dateClick={(info) => handleDateClick(info)}
                     events={events}
                     eventClick={(e: EventClickArg) => handleEventClick(e)}
                     headerToolbar={{

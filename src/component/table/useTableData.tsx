@@ -70,7 +70,7 @@ export const useTableData = () => {
         columnHelper.accessor("description", {
             id: "description",
             header: "Description",
-            cell: ({ getValue }) => <div className="text-xs text-justify">{getValue().length > 80 ? getValue().substring(0, 80) + "..." : getValue()}</div>,
+            cell: ({ getValue }) => <div className="text-justify">{getValue().length > 80 ? getValue().substring(0, 80) + "..." : getValue()}</div>,
             size: DISPLAY_COLUMN_SIZE,
         }),
 

@@ -146,3 +146,72 @@ VALUES
     ('Silvia Devitasari', 'anggota', 6),
     ('Silvia Cantrika Sari', 'anggota', 6),
     ('Muhammad Abu Al Khoir Zaki Badawi', 'anggota', 6);
+
+INSERT INTO
+    news (
+        title,
+        description,
+        slug,
+        content,
+        author,
+        meta_title,
+        meta_description,
+        meta_keywords,
+        category
+    )
+VALUES
+    (
+        'Government Announces New Policy Changes',
+        'The government has announced significant changes to current policies to improve the economy and welfare.',
+        'government-announces-new-policy-changes',
+        'The latest policy changes focus on tax reforms, healthcare, and education. These policies are expected to bring positive impacts in the coming months.',
+        1,
+        'Government Policy Update',
+        'Details about the new government policy changes.',
+        'politics, government, policy, reform',
+        'Politics'
+    ),
+    (
+        'Breakthrough AI Technology Revolutionizes Healthcare',
+        'A leading tech company has unveiled an AI-based solution to assist doctors in diagnosis and treatment planning.',
+        'breakthrough-ai-technology-healthcare',
+        'The technology leverages machine learning to identify diseases faster and more accurately, transforming healthcare as we know it.',
+        2,
+        'AI Revolution in Healthcare',
+        'How AI technology is changing the healthcare industry.',
+        'technology, healthcare, AI, innovation',
+        'Technology'
+    ),
+    (
+        'National Team Secures Victory in World Cup Finals',
+        'The national football team has won the World Cup after a thrilling match against their rivals.',
+        'national-team-secures-victory-world-cup',
+        'The team’s performance was outstanding, with a decisive goal in the final minutes securing their victory.',
+        3,
+        'Historic World Cup Win',
+        'National team celebrates a historic World Cup victory.',
+        'sports, football, world cup, victory',
+        'Sports'
+    ),
+    (
+        'Celebrity Couple Ties the Knot in Lavish Ceremony',
+        'A famous celebrity couple has officially tied the knot in a star-studded event attended by hundreds of guests.',
+        'celebrity-couple-ties-the-knot',
+        'The wedding was held at a luxury resort, featuring stunning decorations and performances by top artists.',
+        4,
+        'Celebrity Wedding Event',
+        'Details about the luxurious wedding of the celebrity couple.',
+        'entertainment, wedding, celebrity, event',
+        'Entertainment'
+    ),
+    (
+        'Stock Market Hits Record High Amid Economic Growth',
+        'The stock market reached an all-time high today as investors remain optimistic about the country’s economic growth.',
+        'stock-market-hits-record-high',
+        'Experts attribute this growth to strong corporate earnings and improved global trade relations.',
+        5,
+        'Stock Market Peaks',
+        'Stock market reaches new heights amid economic optimism.',
+        'finance, stock market, economy, growth',
+        'Finance'
+    );

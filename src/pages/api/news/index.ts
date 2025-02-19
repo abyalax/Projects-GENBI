@@ -1,6 +1,6 @@
 import query from '@/database/db';
 import { News } from '@/services/news';
-import { responseAPI, responseMethodNotAllowed } from '@/utils/response';
+import { responseAPI, responseData, responseMethodNotAllowed } from '@/utils/response';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export const config = {
@@ -11,45 +11,25 @@ export const config = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
-        const news: News = req.body;
-        const { title, description, slug, content, image, created_at, updated_at, date, author, meta_title, meta_description, meta_keywords, meta_author, meta_image, meta_url, video, category } = news;
-
-        console.log({ date, created_at, updated_at });
-        console.log(news);
-
-        const dateObj = new Date(date);
-        const createdAtObj = new Date(created_at);
-        const updatedAtObj = new Date(updated_at);
-
-        console.log({ dateObj })
-        console.log({ createdAtObj })
-        console.log({ updatedAtObj })
-
-        if (isNaN(dateObj.getTime())) {
-            return responseAPI(res, false, 400, 'Invalid date');
-        }
-        if (isNaN(createdAtObj.getTime())) {
-            return responseAPI(res, false, 400, 'Invalid created_at');
-        }
-        if (isNaN(updatedAtObj.getTime())) {
-            return responseAPI(res, false, 400, 'Invalid updated_at');
-        }
-
-        const dateSQL = dateObj.toISOString().slice(0, 19).replace('T', ' ');
-        const created_atSQL = createdAtObj.toISOString().slice(0, 19).replace('T', ' ');
-        const updated_atSQL = updatedAtObj.toISOString().slice(0, 19).replace('T', ' ');
-
-        if (!image || typeof image !== 'string' || !image.startsWith('http')) {
-            return responseAPI(res, false, 400, 'Invalid image URL');
-        }
-
         try {
+            const news: News = req.body;
+            const { title, description, slug, content, image, created_at, updated_at, date, author, meta_title, meta_description, meta_keywords, meta_author, meta_image, meta_url, video, category } = news;
+
+            if (image !== null && meta_image !== null) {
+                if (!image || typeof image !== 'string' || !image.startsWith('http')) {
+                    return responseAPI(res, false, 400, 'Invalid image URL');
+                }
+                if (!meta_image || typeof meta_image !== 'string' || !meta_image.startsWith('http')) {
+                    return responseAPI(res, false, 400, 'Invalid meta_image URL');
+                }
+            }
+
             const data = await query(
                 `INSERT INTO news 
                 (title, description, slug, content, image, created_at, updated_at, date, author, meta_title, meta_description, meta_keywords, meta_author, meta_image, meta_url, video, category) 
                 VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-                [title, description, slug, content, image, created_atSQL, updated_atSQL, dateSQL, author, meta_title, meta_description, meta_keywords, meta_author, meta_image, meta_url, video, category]
+                [title, description, slug, content, image, created_at, updated_at, date, author, meta_title, meta_description, meta_keywords, meta_author, meta_image, meta_url, video, category]
             );
             console.log("Success Upload Data", data);
             return responseAPI(res, true, 200, 'News entry created successfully');
@@ -59,67 +39,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     }
     else if (req.method === 'PUT') {
-        const news: News = req.body;
-        const { title, description, slug, content, image, created_at, updated_at, date, author, meta_title, meta_description, meta_keywords, meta_author, meta_image, meta_url, video, category, id } = news;
-
-        console.log({ date, created_at, updated_at });
-        console.log(news);
-
-        const dateObj = new Date(date);
-        const createdAtObj = new Date(created_at);
-        const updatedAtObj = new Date(updated_at);
-
-        console.log({ dateObj })
-        console.log({ createdAtObj })
-        console.log({ updatedAtObj })
-
-        if (isNaN(dateObj.getTime())) {
-            return responseAPI(res, false, 400, 'Invalid date');
-        }
-        if (isNaN(createdAtObj.getTime())) {
-            return responseAPI(res, false, 400, 'Invalid created_at');
-        }
-        if (isNaN(updatedAtObj.getTime())) {
-            return responseAPI(res, false, 400, 'Invalid updated_at');
-        }
-
-        const dateSQL = dateObj.toISOString().slice(0, 19).replace('T', ' ');
-        const created_atSQL = createdAtObj.toISOString().slice(0, 19).replace('T', ' ');
-        const updated_atSQL = updatedAtObj.toISOString().slice(0, 19).replace('T', ' ');
-
-        if (!image || typeof image !== 'string' || !image.startsWith('http')) {
-            return responseAPI(res, false, 400, 'Invalid image URL');
-        }
-
         try {
-            const data = await query(
-                `UPDATE news SET 
-                title = ?, 
-                description = ?, 
-                slug= ?, 
-                content = ?, 
-                image = ?, 
-                created_at = ?, 
-                updated_at = ?, 
-                date = ?, 
-                author = ?, 
-                meta_title = ?, 
-                meta_description = ?, 
-                meta_keywords = ?, 
-                meta_author = ?, 
-                meta_image = ?, 
-                meta_url = ?, 
-                video = ?, 
-                category = ?
-                WHERE id = ?;`,
+            const news: Partial<News> = req.body;
+            const { id, image, meta_image } = news;
 
-                [title, description, slug, content, image, created_atSQL, updated_atSQL, dateSQL, author, meta_title, meta_description, meta_keywords, meta_author, meta_image, meta_url, video, category, id]
+            if (image !== null && meta_image !== null) {
+                if (!image || typeof image !== 'string' || !image.startsWith('http')) {
+                    return responseAPI(res, false, 400, 'Invalid image URL');
+                }
+                if (!meta_image || typeof meta_image !== 'string' || !meta_image.startsWith('http')) {
+                    return responseAPI(res, false, 400, 'Invalid meta_image URL');
+                }
+            }
+
+            const allowedFields = ["title", "description", "slug", "content", "image", "created_at", "updated_at", "date", "author", "meta_title", "meta_description", "meta_keywords", "meta_author", "meta_image", "meta_url", "video", "category", "id"]
+            const fieldsToUpdate = []
+            const values = []
+
+            for (const [key, value] of Object.entries(news)) {
+                if (allowedFields.includes(key) && value !== undefined && value !== null) {
+                    fieldsToUpdate.push(`${key} = ?`);
+                    values.push(value);
+                }
+            }
+            if (fieldsToUpdate.length === 0) return responseAPI(res, false, 400, 'No valid fields to update');
+            values.push(id);
+            const result = await query<{ affectedRows: number }>(`
+                UPDATE news SET ${fieldsToUpdate.join(', ')} WHERE id = ?`, values
             );
-            console.log("Success Upload Data", data);
-            return responseAPI(res, true, 200, 'News entry created successfully');
+            console.log("Success Upload Data", result);
+            return responseAPI(res, true, 200, 'Succes Update news ');
+
         } catch (error) {
             console.error('Database Error:', error);
-            return responseAPI(res, false, 500, 'Failed to create news entry');
+            return responseAPI(res, false, 500, 'Failed to update news');
         }
     } else {
         return responseMethodNotAllowed(res);

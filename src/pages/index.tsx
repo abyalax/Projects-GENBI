@@ -9,6 +9,8 @@ import Navbar from "@/component/navbar";
 import { ToasterContext } from "@/context/toaster";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { getHotNews, News } from "@/services/news";
+import { FaChevronUp } from "react-icons/fa";
 
 const TypingAnimation = dynamic(() => import("@/utils/typing"), { ssr: false })
 
@@ -27,13 +29,17 @@ const quotes = [
 ];
 
 export async function getServerSideProps() {
+  const news = await getHotNews();
   return {
-    props: {},
+    props: { news },
   };
 }
 
-export default function Home() {
+export default function Home({ news }: { news: News[] }) {
+  const [visible, setVisible] = useState(false);
   const { setToaster } = useContext(ToasterContext)
+  console.log({ news });
+
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -41,6 +47,24 @@ export default function Home() {
       once: false,
     });
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    setToaster({
+      variant: "success",
+      message: "Welcome to my website. I hope you enjoy it!",
+    })
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [setToaster]);
 
   const [formState, setForm] = useState({
     to_name: "GENBI KOMINFO UNISKA",
@@ -109,7 +133,11 @@ export default function Home() {
       </Head>
       <main className={`bg-[#edf0f7] text-gray-700 min-h-screen min-w-screen px-0 ${inter.className}`}>
         <Navbar />
-
+        {visible && (
+          <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }} className="fixed bottom-10 right-10 bg-toska hover:bg-toska-dark p-2 rounded-full">
+            <FaChevronUp size={28} color="white"/>
+          </button>
+        )}
         <section className="text-gray-700 mml:my-12 my-6 text-center pt-20">
           <div data-aos="fade-up" className="w-full sm:px-8 px-4 mml:mx-auto mml:w-3/4 md:px-16">
             <h2 className="text-lg sm:text-xl mml:text-2xl font-semibold mb-1">
@@ -132,7 +160,7 @@ export default function Home() {
         </section>
 
         {/* SINGKAT TENTANG KITA */}
-        <h2 className="text-lg sm:text-xl mml:text-3xl font-semibold text-[#1C8383] text-center mml:my-12 sm:my-6 my-4">About us</h2>
+        <h2 className="text-lg sm:text-xl mml:text-3xl font-semibold text-[#1C8383] text-center mml:my-12 sm:my-6 my-4">About Us</h2>
         <section className="lg:grid lg:grid-cols-2 mml:flex mml:flex-col gap-6 text-gray-800 px-6 sm:px-14 lg:px-32 ">
           <div className="mml:col-span-1 sm:w-full flex gap-1" data-aos="fade-right">
             <Image src={"/assets/img/rapat.jpg"} alt="/assets/img/rapat.jpg" width={600} height={600} className=" w-2/3 rounded object-cover object-center" />
@@ -220,29 +248,22 @@ export default function Home() {
 
         {/* HIGHLIGHT BERITA */}
         <section className="flex flex-col items-center mt-48">
-          <h2 className="text-lg sm:text-xl mml:text-3xl font-semibold text-[#1C8383] text-center mml:my-12 mb-12">Berita Terbaru</h2>
+          <h2 className="text-lg sm:text-xl mml:text-3xl font-semibold text-[#1C8383] text-center mml:my-12 mb-12">Highlight Post</h2>
+
           <div className="flex flex-wrap justify-center gap-8">
-            <div className="max-w-96 h-fit text-black">
-              <Image alt="" src={"/assets/kegiatan/OPM.png"} width={800} height={500} className="object-cover object-center rounded-lg" />
-              <div className="px-4 text-center">
-                <h2 className=" my-2 text-lg">Operasi Pasar Murni Bank Indonesia bersama GenBI UNISKA</h2>
-                <p className=" text-gray-500 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio praesentium voluptas error esse. Explicabo maiores dolorum repellat pariatur.</p>
+
+            {news.map((e) => (
+              <div key={e.id} className="max-w-96 h-fit text-black">
+                {e.image && (
+                  <Image alt={e.title} src={e.image} width={800} height={500} className="object-cover object-center rounded-lg" />
+                )}
+                <div className="px-4 text-center">
+                  <Link href={`/news/${e.slug}`} className=" my-2 text-lg">{e.title}</Link>
+                  <p className=" text-gray-500 text-sm">{e.description}</p>
+                </div>
               </div>
-            </div>
-            <div className="max-w-96 h-fit">
-              <Image alt="" src={"/assets/kegiatan/OPM.png"} width={800} height={500} className="object-cover object-center rounded-lg" />
-              <div className="px-4 text-center">
-                <h2 className=" my-2 text-lg">Operasi Pasar Murni Bank Indonesia bersama GenBI UNISKA</h2>
-                <p className=" text-gray-500 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio praesentium voluptas error esse. Explicabo maiores dolorum repellat pariatur.</p>
-              </div>
-            </div>
-            <div className="max-w-96 h-fit">
-              <Image alt="" src={"/assets/kegiatan/OPM.png"} width={800} height={500} className="object-cover object-center rounded-lg" />
-              <div className="px-4 text-center">
-                <h2 className=" my-2 text-lg">Operasi Pasar Murni Bank Indonesia bersama GenBI UNISKA</h2>
-                <p className=" text-gray-500 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio praesentium voluptas error esse. Explicabo maiores dolorum repellat pariatur.</p>
-              </div>
-            </div>
+            ))}
+
           </div>
           <Link href={"/news"} className="text-center my-4 text-lg text-gray-700 font-semibold hover:font-bold hover:text-gray-900">Baca Selengkapnya</Link>
         </section>

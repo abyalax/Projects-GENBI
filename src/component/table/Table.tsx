@@ -6,7 +6,7 @@ import { TableHeader } from "./TableHeader";
 import RowDetailView from "./RowDetail";
 import Pagination from "./Pagination";
 import dynamic from "next/dynamic";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { ColumnVisibilitySelector } from "./ColumnVisibility";
 
 const Droppable = dynamic(
@@ -49,10 +49,10 @@ const Table = ({ news }: { news: News[] }) => {
 
       <div className="flex items-center">
         <ColumnVisibilitySelector table={table} columnIds={columnIds} />
-          <input className="ml-2 w-96 px-3 py-2 rounded ring-0 focus:outline-none"
-            onChange={(e) => table.setGlobalFilter(e.target.value)}
-            placeholder="Search..."
-          />
+        <input className="ml-2 w-96 px-3 py-2 rounded ring-0 focus:outline-none"
+          onChange={(e) => table.setGlobalFilter(e.target.value)}
+          placeholder="Search..."
+        />
       </div>
 
       <div className="bg-white border-2 border-slate-200 h-fit w-fit rounded-xl m-1">
@@ -89,15 +89,18 @@ const Table = ({ news }: { news: News[] }) => {
           <tbody className="rounded-xl overflow-x-auto">
             {table.getRowModel().rows.map((news) => (
 
-              <tr key={news.id} className="p-4 overflow-x-scroll h-fit " style={{ background: news.getIsSelected() ? "#21A4A4" : "white", color: news.getIsSelected() ? "white" : "black" }}>
+              <Fragment key={news.id}>
+                <tr className="p-4 overflow-x-scroll h-fit " style={{ background: news.getIsSelected() ? "#21A4A4" : "white", color: news.getIsSelected() ? "white" : "black" }}>
 
-                {news.getVisibleCells().map((cell) => (
+                  {news.getVisibleCells().map((cell) => (
 
-                  <td key={cell.id} className="p-3 text-nowrap border-r border-slate-200">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
+                    <td key={cell.id} className="p-3 text-nowrap border-r border-slate-200">
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
 
-                ))}
+                  ))}
+
+                </tr>
 
                 {news.getIsExpanded() && (
                   <tr>
@@ -106,8 +109,8 @@ const Table = ({ news }: { news: News[] }) => {
                     </td>
                   </tr>
                 )}
+              </Fragment>
 
-              </tr>
             ))}
           </tbody>
 

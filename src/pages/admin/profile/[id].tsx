@@ -1,7 +1,10 @@
 import AdminLayout from '@/component/admin/__layout';
+import { ToasterContext } from '@/context/toaster';
+import fetchAxios from '@/lib/axios';
 import { Anggota, getAnggotaByID } from '@/services/anggota';
 import { CldUploadWidget, CloudinaryUploadWidgetInfo, CloudinaryUploadWidgetResults } from 'next-cloudinary';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { FormEvent, useContext, useState } from 'react';
 
 export async function getServerSideProps({ params }: { params: { id: number } }) {
     const getData: Anggota[] = await getAnggotaByID(params.id)
@@ -12,8 +15,10 @@ export async function getServerSideProps({ params }: { params: { id: number } })
 }
 
 const UpdateAnggota = ({ anggota }: { anggota: Anggota }) => {
-    console.log({ anggota });
+    const { setToaster } = useContext(ToasterContext)
+    const { push } = useRouter()
     const [formState, setForm] = useState({
+        id: anggota.id,
         name: anggota.name,
         email: anggota.email,
         phone: anggota.phone,
@@ -34,8 +39,24 @@ const UpdateAnggota = ({ anggota }: { anggota: Anggota }) => {
         }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         console.log("Form State to Submit : ", formState);
+        const updateData = fetchAxios.put("/api/anggota", formState)
+        updateData.then(res => {
+            console.log("Update Data : ", res.data);
+            setToaster({
+                variant: "success",
+                message: "Update Data Berhasil",
+            })
+            push("/admin/profile")
+        }).catch(err => {
+            setToaster({
+                variant: "danger",
+                message: "Gagal Update Data, Silahkan Coba Lagi",
+            })
+            console.log("Update Data : ", err)
+        });
     }
 
     return (
@@ -44,19 +65,19 @@ const UpdateAnggota = ({ anggota }: { anggota: Anggota }) => {
             <form onSubmit={handleSubmit} className='px-8'>
                 <div className='flex flex-col gap-1 w-full'>
                     <p className="font-semibold mt-2">Nama</p>
-                    <input required onChange={(e) => setForm({ ...formState, name: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="text" placeholder='Masukkan Nama' defaultValue={anggota.name} />
+                    <input onChange={(e) => setForm({ ...formState, name: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="text" placeholder='Masukkan Nama' defaultValue={anggota.name} />
                     <p className="font-semibold mt-2">Email</p>
-                    <input required onChange={(e) => setForm({ ...formState, email: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="email" placeholder='Masukkan Email ( e.g: usermail@gmail.com )' defaultValue={anggota.email} />
+                    <input onChange={(e) => setForm({ ...formState, email: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="email" placeholder='Masukkan Email ( e.g: usermail@gmail.com )' defaultValue={anggota.email} />
                     <p className="font-semibold mt-2">Phone</p>
-                    <input required onChange={(e) => setForm({ ...formState, phone: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="number" placeholder='Masukkan Nomor Handphone' defaultValue={anggota.phone} />
+                    <input onChange={(e) => setForm({ ...formState, phone: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="number" placeholder='Masukkan Nomor Handphone' defaultValue={anggota.phone} />
                     <p className="font-semibold mt-2">Fakultas</p>
-                    <input required onChange={(e) => setForm({ ...formState, fakultas: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="text" placeholder='Masukkan Asal Fakultas' defaultValue={anggota.fakultas} />
+                    <input onChange={(e) => setForm({ ...formState, fakultas: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="text" placeholder='Masukkan Asal Fakultas' defaultValue={anggota.fakultas} />
                     <p className="font-semibold mt-2">Prodi</p>
-                    <input required onChange={(e) => setForm({ ...formState, prodi: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="text" placeholder='Masukkan Asal Prodi' defaultValue={anggota.prodi} />
+                    <input onChange={(e) => setForm({ ...formState, prodi: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="text" placeholder='Masukkan Asal Prodi' defaultValue={anggota.prodi} />
                     <p className="font-semibold mt-2">Semester</p>
-                    <input required onChange={(e) => setForm({ ...formState, semester: parseInt(e.target.value) })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="number" placeholder='Masukkan semester' defaultValue={anggota.semester} />
+                    <input onChange={(e) => setForm({ ...formState, semester: parseInt(e.target.value) })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="number" placeholder='Masukkan semester' defaultValue={anggota.semester} />
                     <p className="font-semibold mt-2">Jabatan</p>
-                    <input required onChange={(e) => setForm({ ...formState, jabatan: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="text" placeholder='Masukkan Jabatan di GenBI ( e.g: Chief Operating Officer atau anggota )' defaultValue={anggota.jabatan} />
+                    <input onChange={(e) => setForm({ ...formState, jabatan: e.target.value })} className='w-1/2 focus:outline-none py-1 px-2 rounded border border-slate-200' type="text" placeholder='Masukkan Jabatan di GenBI ( e.g: Chief Operating Officer atau anggota )' defaultValue={anggota.jabatan} />
                     <div className='h-16 mb-4'>
                         <p className="font-semibold mt-2">Foto Profile</p>
                         <CldUploadWidget
@@ -74,7 +95,7 @@ const UpdateAnggota = ({ anggota }: { anggota: Anggota }) => {
                             )}
                         </CldUploadWidget>
                     </div>
-                </div> 
+                </div>
 
                 <button type="submit" className='my-4 bg-toska-light hover:bg-toska-dark text-white font-semibold hover:font-bold py-2 px-4 rounded'>
                     Simpan

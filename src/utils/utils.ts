@@ -16,3 +16,8 @@ export function validateImageExtension(imageUrl: string) {
     }
 }
 
+export function formatDateForSQL(date: string | undefined  ) {
+    if (date === undefined) return undefined
+    const dateObj = new Date(date);
+    return dateObj.toLocaleString('sv-SE', { timeZone: 'UTC' }).replace('T', ' ');
+}

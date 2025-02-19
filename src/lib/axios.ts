@@ -7,13 +7,13 @@ const Headers = {
     Expires:0,
 };
 
-const Instance = axios.create({
+const fetchAxios = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: Headers,
     timeout: 60 * 1000,
 });
 
-Instance.interceptors.request.use(
+fetchAxios.interceptors.request.use(
     async (request) => {
         return request
     },
@@ -22,9 +22,9 @@ Instance.interceptors.request.use(
     }
 )
 
-Instance.interceptors.response.use(
+fetchAxios.interceptors.response.use(
     (response) => response,
     (error) =>  Promise.reject(error)
 );
 
-export default Instance;
+export default fetchAxios;
