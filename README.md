@@ -1,3 +1,190 @@
+# Profile and Blog CMS GenBI Organization  
+
+## Ringkasan  
+Web ini berfungsi sebagai branding organisasi penerima Beasiswa Bank Indonesia sekaligus tempat untuk platform berita, artikel tentang GenBI, dan proker yang akan serta sudah dijalankan oleh organisasi GenBI di Universitas Islam Kadiri-Kediri.  
+
+## Latar Belakang  
+### Masalah/Kebutuhan  
+- Meningkatkan branding organisasi GenBI melalui website dengan optimalisasi pada search engine optimization (SEO).  
+- Menyediakan platform yang terstruktur untuk menyebarkan informasi terkait GenBI kepada anggota dan masyarakat umum.  
+- Memudahkan pengelolaan konten organisasi dalam satu sistem yang aman dan mudah digunakan.  
+
+### Motivasi  
+- Sebagai program kerja dari divisi Kominfo untuk melakukan branding organisasi GenBI.  
+- Meningkatkan transparansi dan aksesibilitas informasi terkait kegiatan, artikel, dan agenda organisasi.  
+- Mendorong digitalisasi dan modernisasi sistem informasi dalam organisasi.  
+
+## Fitur Utama  
+- **Profile organisasi GenBI**  
+  Informasi tentang GenBI, termasuk sejarah, struktur organisasi, dan visi-misi.  
+- **Agenda organisasi GenBI**  
+  Agenda program kerja organisasi dengan tampilan kalender interaktif.  
+- **Blog News, Artikel, dan Informasi kegiatan GenBI**  
+  Platform untuk menyebarkan informasi, berita, dan artikel terkait GenBI.  
+- **Halaman Admin GenBI dengan proteksi autentikasi**  
+  Dashboard admin untuk mengelola website, termasuk manajemen artikel, agenda, dan profil organisasi.  
+
+## Teknologi  
+- **Frontend:** Next.js, Tailwind CSS  
+- **Backend:** Next.js API Routes (Server Actions)  
+- **Database:** PostgreSQL (Neon) dengan Prisma ORM  
+- **Authentication:** Next Auth  
+- **Media Storage:** Cloudinary  
+- **Tools Lain:** Vercel (Deployment), GitHub (Version Control), TanStack Table (Data Table)  
+
+### Alur Kerja  
+1. Admin login melalui halaman autentikasi.  
+2. Admin dapat mengelola konten seperti profil organisasi, agenda, dan blog dari dashboard.  
+3. Pengunjung dapat mengakses informasi tentang GenBI melalui website.  
+4. Sistem melakukan optimasi SEO agar konten lebih mudah ditemukan di mesin pencari.  
+
+## Implementasi & Pengembangan  
+### Pendekatan  
+  Metodologi **Agile** dengan pendekatan **Scrum**, terdiri dari sprint dalam pengembangan fitur.  
+  **Issue tracking** menggunakan GitHub Projects atau Trello untuk pengelolaan tugas.  
+
+### Tahapan  
+1. **Perencanaan**  
+  Menentukan kebutuhan fitur dan merancang wireframe.  
+1. **Pengembangan**  
+  Membangun frontend dengan Next.js dan backend dengan API Routes.  
+  Menghubungkan sistem dengan database menggunakan Prisma.  
+  Mengimplementasikan autentikasi dengan NextAuth beserta session managementnya.  
+1. **Pengujian**  
+  Melakukan pengujian unit, integrasi, dan UI untuk memastikan fitur berjalan dengan baik.  
+1. **Deployment**  
+  Menggunakan Vercel untuk hosting free. Rencana web akan di hosting ikut web kampus dengan sub domain.  
+
+### Challenges & Solusi  
+- **Optimasi SEO:**  
+  Menggunakan teknik server-side rendering (SSR) di Next.js untuk meningkatkan ranking di mesin pencari.  
+- **Keamanan autentikasi admin:**  
+  Menggunakan Next Auth untuk memastikan hanya admin yang dapat mengakses dashboard.  
+- **Manajemen media (gambar, file):**  
+  Menyimpan dan mengelola media menggunakan Cloudinary agar lebih efisien.  
+- **Kinerja database:**  
+  Menggunakan MySQL untuk manajemen data. 
+ 
+
+## Arsitektur Proyek   
+```
+└── 📁src
+    └── 📁component
+        └── 📁admin
+            └── __layout.tsx
+            └── __routes.tsx
+            └── 📁agenda
+                └── create.tsx
+                └── update.tsx
+            └── 📁profile
+                └── admin-bph.tsx
+                └── bendahara-view.tsx
+                └── sekretaris-view.tsx
+        └── dropdown.tsx
+        └── footer.tsx
+        └── navbar.tsx
+        └── pagination.tsx
+        └── quill-content.tsx
+        └── 📁table
+            └── ColumnVisibility.tsx
+            └── index.ts
+            └── Pagination.tsx
+            └── RowDetail.tsx
+            └── Table.tsx
+            └── Table.utils.ts
+            └── TableHeader.tsx
+            └── useTableData.tsx
+        └── 📁ui
+            └── checkbox.tsx
+            └── share.tsx
+            └── toaster.tsx
+            └── window.tsx
+    └── 📁context
+        └── toaster.tsx
+        └── window.tsx
+    └── 📁database
+        └── db.ts
+    └── 📁lib
+        └── axios.ts
+    └── 📁middlewares
+        └── auth.ts
+    └── 📁pages
+        └── _app.tsx
+        └── _document.tsx
+        └── 📁admin
+            └── 📁agenda
+                └── index.tsx
+                └── styles.module.css
+            └── 📁gallery
+                └── index.tsx
+            └── index.tsx
+            └── 📁news
+                └── [id].tsx
+                └── create.tsx
+                └── index.tsx
+                └── 📁slug
+                    └── [slug].tsx
+            └── 📁profile
+                └── [id].tsx
+                └── index.tsx
+            └── 📁settings
+                └── index.tsx
+        └── 📁agenda
+            └── index.tsx
+            └── styles.module.css
+        └── 📁api
+            └── 📁agenda
+                └── index.ts
+            └── 📁anggota
+                └── index.tsx
+            └── 📁auth
+                └── [...nextauth].ts
+            └── 📁cloudinary
+                └── index.ts
+            └── hello.ts
+            └── 📁news
+                └── index.ts
+        └── 📁gallery
+            └── index.tsx
+        └── index.tsx
+        └── 📁login
+            └── index.tsx
+        └── 📁news
+            └── [slug].tsx
+            └── index.tsx
+        └── 📁profile
+            └── [id].tsx
+            └── 📁divisi
+                └── [id].tsx
+            └── index.tsx
+    └── 📁services
+        └── 📁agenda
+            └── index.ts
+        └── 📁anggota
+            └── index.ts
+        └── 📁auth
+            └── index.ts
+            └── service.ts
+        └── 📁cloudinary
+            └── upload.ts
+        └── 📁divisi
+            └── index.ts
+        └── 📁news
+            └── index.ts
+        └── 📁pengurus
+            └── index.ts
+    └── 📁styles
+        └── globals.css
+    └── 📁utils
+        └── constant.ts
+        └── convert-date.ts
+        └── dummy-data.ts
+        └── response.ts
+        └── typing.tsx
+        └── utils.ts
+    └── middleware.ts
+```  
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -39,51 +226,6 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-
-## Struktur Database
-Table anggota 
- - id
- - name
- - email
- - phone
- - fakultas
- - prodi
- - semester
- - jabatan
- - divisi ( relasi ke tabel divisi )
-
-Table divisi
- - id
- - name
- - leader
- - anggota ( relasi ke tabel anggota )
- - visi
- - misi
-
-Table news
- - id
- - title
- - description
- - slug
- - content
- - image ( url )
- - created_at
- - updated_at
-
-Table agenda
- - id
- - title
- - description
- - content
- - planned_date
- - end
- - created_at
- - updated_at
-
-Table user 
- - id
- - email
- - password
 
 ## Customize Full Calendar JS with class CSS
 
